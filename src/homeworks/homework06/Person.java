@@ -9,7 +9,7 @@ public class Person {
     private int amountMoney;
     private ArrayList<Product> products;
 
-    public Person(String name, int amountMoney, ArrayList<Product> products) {
+    public Person(String name, int amountMoney) {
         setName(name);
         this.amountMoney = amountMoney;
     }
