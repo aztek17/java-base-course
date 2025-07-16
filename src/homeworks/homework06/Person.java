@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Person {
     private String name;
     private int amountMoney;
-    private ArrayList<Product> products;
+    private final ArrayList<Product> products = new ArrayList<>();
 
     public Person(String name, int amountMoney) {
         setName(name);
@@ -33,7 +33,7 @@ public class Person {
     public void setAmountMoney(int amountMoney) {
         if (amountMoney > 0) {
             this.amountMoney = amountMoney;
-        }  else {
+        } else {
             System.out.println("Деньги не могут быть отрицательными");
         }
     }
