@@ -70,10 +70,10 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", amountMoney=" + amountMoney +
-                ", products=" + products +
-                '}';
+        if (products.isEmpty()) {
+            return name + " - Ничего не куплено";
+        } else {
+            return name + " - " + products;
+        }
     }
 }
