@@ -23,7 +23,9 @@ public class App {
         Person[] persons = inputBuyers();
         Product[] products = inputProducts();
         inputBuy(persons, products);
-
+        for (Person person : persons) {
+            System.out.println(person);
+        }
     }
 
     private static Person[] inputBuyers() {
@@ -35,7 +37,7 @@ public class App {
         for (int i = 0; i < buyers.length; i++) {
             persons[i] = new Person(
                     buyers[i].split("=")[0].trim().replaceAll("\\s+", " "),
-                    Integer.parseInt(buyers[i].split("=")[1].replaceAll("[^0-9]", ""))
+                    Integer.parseInt(buyers[i].split("=")[1].trim().replaceAll("^-?\\\\d+", ""))
             );
         }
         return persons;
@@ -57,6 +59,7 @@ public class App {
     }
 
     private static void inputBuy(Person[] persons, Product[] products) {
+        System.out.println("Покупатели выбирают товары, начните вводить список покупателей и выбранные товары построчно");
         Scanner buyScanner = new Scanner(System.in);
         while (buyScanner.hasNextLine()) {
             String buy = buyScanner.nextLine();

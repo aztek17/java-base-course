@@ -11,7 +11,7 @@ public class Person {
 
     public Person(String name, int amountMoney) {
         setName(name);
-        this.amountMoney = amountMoney;
+        setAmountMoney(amountMoney);
     }
 
     public String getName() {
