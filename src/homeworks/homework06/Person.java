@@ -31,7 +31,7 @@ public class Person {
     }
 
     public void setAmountMoney(int amountMoney) {
-        if (amountMoney > 0) {
+        if (amountMoney >= 0) {
             this.amountMoney = amountMoney;
         } else {
             System.out.println("Деньги не могут быть отрицательными");
