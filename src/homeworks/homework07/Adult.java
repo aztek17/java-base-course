@@ -13,6 +13,7 @@ public class Adult extends Person {
         this.buyCredit = new Random().nextBoolean();
     }
 
+    @Override
     public void addProduct(Product product) {
         if (getAmountMoney() >= product.getProductPrice()) {
             this.products.add(product);
