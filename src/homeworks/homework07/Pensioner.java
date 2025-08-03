@@ -20,6 +20,9 @@ public class Pensioner extends Person {
                 System.out.println(getName() + " не может позволить себе " + product.getProductName());
             }
         }
+        else {
+            System.out.println("Пенсионер покупает только акционные товары");
+        }
     }
 
     private int priceAfterAdditionalDiscount(Product product) {
