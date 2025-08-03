@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    // test data: Павел  Андреевич  =  10000;  Анна Петровна = 2000; Борис = 10
+    // test data: Павел  Андреевич  =  10000, 45;  Анна Петровна = 2000, 70; Борис = 10, 8
     // test data: Хлеб = 40; Молоко = 60; Торт = 800, 15%; Кофе растворимый = 432, 50%;
     /*
     test data:
@@ -38,10 +38,7 @@ public class App {
 
         Person[] persons = new Person[buyers.length];
         for (int i = 0; i < buyers.length; i++) {
-            persons[i] = new Person(
-                    buyers[i].split("=")[0].trim().replaceAll("\\s+", " "),
-                    Integer.parseInt(buyers[i].split("=")[1].trim().replaceAll("^-?\\\\d+", ""))
-            );
+            persons[i] = createPerson(buyers[i]);
         }
         return persons;
     }
@@ -107,5 +104,31 @@ public class App {
         }
         System.out.println("Обычные продукты: " + baseProducts);
         System.out.println("Акционные продукты: " + discountProducts);
+    }
+
+    private static Person createPerson(String buyer) {
+        String personName = buyer
+                .split("=")[0]
+                .trim()
+                .replaceAll("\\s+", " ");
+        int personCash = Integer.parseInt(buyer
+                .split("=")[1]
+                .trim()
+                .split(",")[0]
+                .trim()
+                .replaceAll("^-?\\\\d+", ""));
+        int personAge = Integer.parseInt(buyer
+                .split("=")[1]
+                .trim()
+                .split(",")[1]
+                .trim());
+
+        if (personAge <= 17) {
+            return new Child(personName, personCash, personAge);
+        } else if (personAge >= 65) {
+            return new Pensioner(personName, personCash, personAge);
+        } else {
+            return new Adult(personName, personCash, personAge);
+        }
     }
 }
