@@ -53,7 +53,10 @@ public class App {
             if (!inputListProducts[i].contains("%")) {
                 products[i] = new Product(
                         inputListProducts[i].split("=")[0].trim().replaceAll("\\s+", " "),
-                        Integer.parseInt(inputListProducts[i].split("=")[1].replaceAll("[^0-9]", ""))
+                        Integer.parseInt(inputListProducts[i]
+                                .split("=")[1]
+                                .split(",")[0]
+                                .replaceAll("[^0-9]", ""))
                 );
             } else {
                 products[i] = new DiscountProduct(
