@@ -8,10 +8,12 @@ public class Person {
     private String name;
     private int amountMoney;
     private final ArrayList<Product> products = new ArrayList<>();
+    private int age;
 
-    public Person(String name, int amountMoney) {
+    public Person(String name, int amountMoney, int age) {
         setName(name);
         setAmountMoney(amountMoney);
+        this.age = age;
     }
 
     public String getName() {
