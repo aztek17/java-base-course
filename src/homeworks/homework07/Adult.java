@@ -5,7 +5,6 @@ import java.util.Random;
 
 public class Adult extends Person {
 
-    private final ArrayList<Product> products = new ArrayList<>();
     private boolean buyCredit;
 
     public Adult(String name, int amountMoney, int age) {
@@ -16,7 +15,7 @@ public class Adult extends Person {
     @Override
     public void addProduct(Product product) {
         if (getAmountMoney() >= product.getProductPrice()) {
-            this.products.add(product);
+            getProducts().add(product);
             setAmountMoney(getAmountMoney() - product.getProductPrice());
             System.out.println(getName() + " купил " + product.getProductName());
         } else if (getAmountMoney() < product.getProductPrice() && isBuyCredit()) {

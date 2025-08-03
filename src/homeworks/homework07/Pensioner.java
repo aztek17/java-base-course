@@ -3,7 +3,6 @@ package homeworks.homework07;
 import java.util.ArrayList;
 
 public class Pensioner extends Person {
-    private final ArrayList<Product> products = new ArrayList<>();
 
     public Pensioner(String name, int amountMoney, int age) {
         super(name, amountMoney, age);
@@ -13,14 +12,13 @@ public class Pensioner extends Person {
     public void addProduct(Product product) {
         if (product instanceof DiscountProduct) {
             if (getAmountMoney() >= priceAfterAdditionalDiscount(product)) {
-                this.products.add(product);
+                getProducts().add(product);
                 setAmountMoney(getAmountMoney() - priceAfterAdditionalDiscount(product));
                 System.out.println(getName() + " купил " + product.getProductName());
             } else {
                 System.out.println(getName() + " не может позволить себе " + product.getProductName());
             }
-        }
-        else {
+        } else {
             System.out.println("Пенсионер покупает только акционные товары");
         }
     }
