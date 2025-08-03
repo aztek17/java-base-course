@@ -22,13 +22,13 @@ public class App {
      */
 
     public static void main(String[] args) {
-//        Person[] persons = inputBuyers();
+        Person[] persons = inputBuyers();
         Product[] products = inputProducts();
         printDiscountSign(products);
-//        inputBuy(persons, products);
-//        for (Person person : persons) {
-//            System.out.println(person);
-//        }
+        inputBuy(persons, products);
+        for (Person person : persons) {
+            System.out.println(person);
+        }
     }
 
     private static Person[] inputBuyers() {
