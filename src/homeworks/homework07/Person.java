@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Person {
     private String name;
-    private int amountMoney;
+    protected int amountMoney;
     private final ArrayList<Product> products = new ArrayList<>();
     private int age;
 

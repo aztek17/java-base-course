@@ -23,6 +23,19 @@ public class Adult extends Person {
             System.out.println(getName() + " купил товар " + product.getProductName() + " в кредит");
         } else {
             System.out.println(getName() + " не может позволить себе " + product.getProductName());
+            setAmountMoney(getAmountMoney() - product.getProductPrice());
+        }
+    }
+
+    @Override
+    public void setAmountMoney(int amountMoney) {
+        if (amountMoney >= 0) {
+            super.setAmountMoney(amountMoney);
+        } else if (isBuyCredit()) {
+            this.amountMoney = amountMoney;
+            System.out.println("Использована кредитная карта. Задолженность по карте: " + Math.abs(getAmountMoney()));
+        } else {
+            System.out.println("Деньги не могут быть отрицательными(кредитная карта так же отсутствует)");
         }
     }
 
