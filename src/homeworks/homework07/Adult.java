@@ -1,6 +1,5 @@
 package homeworks.homework07;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Adult extends Person {
@@ -19,6 +18,8 @@ public class Adult extends Person {
             setAmountMoney(getAmountMoney() - product.getProductPrice());
             System.out.println(getName() + " купил " + product.getProductName());
         } else if (getAmountMoney() < product.getProductPrice() && isBuyCredit()) {
+            getProducts().add(product);
+            setAmountMoney(getAmountMoney() - product.getProductPrice());
             System.out.println(getName() + " купил товар " + product.getProductName() + " в кредит");
         } else {
             System.out.println(getName() + " не может позволить себе " + product.getProductName());

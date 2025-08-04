@@ -1,7 +1,5 @@
 package homeworks.homework07;
 
-import java.util.ArrayList;
-
 public class Pensioner extends Person {
 
     public Pensioner(String name, int amountMoney, int age) {
