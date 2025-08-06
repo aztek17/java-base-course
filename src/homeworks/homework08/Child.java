@@ -13,7 +13,7 @@ public class Child extends Person {
         if (getAge() < 6) {
             App.writeToFile("Ребенок не может покупать продукты");
         } else if (!product.isAccessibleToChild()) {
-            App.writeToFile("Этот товар не разрешен к продаже ребенку");
+            App.writeToFile("Товар " + product.getProductName() + " не разрешен к продаже ребенку");
         } else {
             super.addProduct(product);
         }
