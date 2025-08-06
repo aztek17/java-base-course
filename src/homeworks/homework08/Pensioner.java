@@ -14,12 +14,12 @@ public class Pensioner extends Person {
             if (getAmountMoney() >= priceAfterAdditionalDiscount(product)) {
                 getProducts().add(product);
                 setAmountMoney(getAmountMoney() - priceAfterAdditionalDiscount(product));
-                writeDataToFile(getName() + " купил " + product.getProductName());
+                App.writeToFile(getName() + " купил " + product.getProductName());
             } else {
-                writeDataToFile(getName() + " не может позволить себе " + product.getProductName());
+                App.writeToFile(getName() + " не может позволить себе " + product.getProductName());
             }
         } else {
-            writeDataToFile("Пенсионер покупает только акционные товары");
+            App.writeToFile("Пенсионер покупает только акционные товары");
         }
     }
 

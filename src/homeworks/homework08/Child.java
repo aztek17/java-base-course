@@ -11,9 +11,9 @@ public class Child extends Person {
     @Override
     public void addProduct(Product product) throws IOException {
         if (getAge() < 6) {
-            writeDataToFile("Ребенок не может покупать продукты");
+            App.writeToFile("Ребенок не может покупать продукты");
         } else if (!product.isAccessibleToChild()) {
-            writeDataToFile("Этот товар не разрешен к продаже ребенку");
+            App.writeToFile("Этот товар не разрешен к продаже ребенку");
         } else {
             super.addProduct(product);
         }
