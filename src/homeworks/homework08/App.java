@@ -4,7 +4,7 @@ import java.io.*;
 
 public class App {
     public static void main(String[] args) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/input.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("resources/input.txt"))) {
             Person[] persons = inputBuyers(reader);
             Product[] products = inputProducts(reader);
             inputBuy(persons, products, reader);
@@ -71,6 +71,7 @@ public class App {
                 }
             }
         }
+        writeToFile("\n");
     }
 
     private static Person createPerson(String buyer) throws IOException {
@@ -100,7 +101,7 @@ public class App {
     }
 
     public static void writeToFile(String text) {
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("src/output.txt", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("resources/output/output.txt", true))) {
             writer.write(String.valueOf(text));
             writer.newLine();
         } catch (IOException e) {

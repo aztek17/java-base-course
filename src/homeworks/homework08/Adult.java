@@ -21,7 +21,7 @@ public class Adult extends Person {
         } else if (getAmountMoney() < product.getProductPrice() && isBuyCredit()) {
             getProducts().add(product);
             setAmountMoney(getAmountMoney() - product.getProductPrice());
-            App.writeToFile(getName() + " купил " + product.getProductName() + " в кредит");
+            App.writeToFile(getName() + " купил " + product.getProductName() + " в кредит*");
         } else {
             App.writeToFile(getName() + " не может позволить себе " + product.getProductName());
         }
