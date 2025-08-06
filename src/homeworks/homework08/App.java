@@ -11,6 +11,7 @@ public class App {
             for (Person person : persons) {
                 writeToFile(person.toString());
             }
+            writeToFile("^".repeat(120));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

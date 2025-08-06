@@ -4,7 +4,7 @@ out/
 !**/src/test/**/out/
 /.idea/
 *.iml
-resources/output/
+/resources/output
 
 ### Eclipse ###
 .apt_generated
