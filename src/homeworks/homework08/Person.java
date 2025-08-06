@@ -12,7 +12,6 @@ public class Person {
     protected int amountMoney;
     private final ArrayList<Product> products = new ArrayList<>();
     private int age;
-//    private final BufferedWriter writer = new BufferedWriter(new FileWriter("src/output.txt", true));
 
     public Person(String name, int amountMoney, int age) throws IOException {
         setName(name);
@@ -40,7 +39,6 @@ public class Person {
         if (amountMoney >= 0) {
             this.amountMoney = amountMoney;
         } else {
-//            System.out.println("Деньги не могут быть отрицательными");
             App.writeToFile("Деньги не могут быть отрицательными");
         }
     }
@@ -67,16 +65,9 @@ public class Person {
         if (age >= 0) {
             this.age = age;
         } else {
-//            System.out.println("Возвраст не может быть отрицательным числом");
             App.writeToFile("Возвраст не может быть отрицательным числом");
         }
     }
-
-//    protected void writeToFile(String text) throws IOException {
-//        writer.write(text);
-//        writer.newLine();
-//        writer.flush();
-//    }
 
     @Override
     public boolean equals(Object o) {

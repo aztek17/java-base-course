@@ -21,13 +21,11 @@ public class Product {
     public void setProductName(String productName) {
         if (!productName.isEmpty()) {
             if (productName.length() < 3 || productName.matches("\\d+")) {
-//                System.out.println("Недопустимое имя продукта");
                 App.writeToFile("Недопустимое имя продукта");
                 return;
             }
             this.productName = productName;
         } else {
-//            System.out.println("Название товара не может быть пустым");
             App.writeToFile("Название товара не может быть пустым");
         }
     }
@@ -40,7 +38,6 @@ public class Product {
         if (productPrice > 0) {
             this.productPrice = productPrice;
         } else {
-//            System.out.println("Недопустимая стоимость продукта");
             App.writeToFile("Недопустимая стоимость продукта");
         }
     }

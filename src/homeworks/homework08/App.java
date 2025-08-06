@@ -10,9 +10,6 @@ public class App {
             inputBuy(persons, products, reader);
             for (Person person : persons) {
                 writeToFile(person.toString());
-//                System.out.println(person);
-//                writer.write(String.valueOf(person));
-//                writer.newLine();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -71,7 +68,6 @@ public class App {
                     person.addProduct(selectedProduct);
                 } else if (selectedProduct == null & buy.contains(person.getName())) {
                     writeToFile("Выбранный покупателем товар не был найден в магазине");
-//                    System.out.println("Выбранный покупателем товар не был найден в магазине");
                 }
             }
         }
