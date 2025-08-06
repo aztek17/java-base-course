@@ -1,14 +1,17 @@
 package homeworks.homework07;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class Product {
     private String productName;
     private int productPrice;
+    private boolean isAccessibleToChild;
 
     public Product(String productName, int productPrice) {
         setProductName(productName);
         setProductPrice(productPrice);
+        this.isAccessibleToChild = new Random().nextBoolean();
     }
 
     public String getProductName() {
@@ -37,6 +40,14 @@ public class Product {
         } else {
             System.out.println("Недопустимая стоимость продукта");
         }
+    }
+
+    public boolean isAccessibleToChild() {
+        return isAccessibleToChild;
+    }
+
+    public void setAccessibleToChild(boolean accessibleToChild) {
+        isAccessibleToChild = accessibleToChild;
     }
 
     @Override

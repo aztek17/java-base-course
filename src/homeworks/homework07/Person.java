@@ -6,12 +6,14 @@ import java.util.Objects;
 
 public class Person {
     private String name;
-    private int amountMoney;
+    protected int amountMoney;
     private final ArrayList<Product> products = new ArrayList<>();
+    private int age;
 
-    public Person(String name, int amountMoney) {
+    public Person(String name, int amountMoney, int age) {
         setName(name);
         setAmountMoney(amountMoney);
+        this.age = age;
     }
 
     public String getName() {
@@ -49,6 +51,18 @@ public class Person {
             System.out.println(getName() + " купил " + product.getProductName());
         } else {
             System.out.println(getName() + " не может позволить себе " + product.getProductName());
+        }
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        if (age >= 0) {
+            this.age = age;
+        } else {
+            System.out.println("Возвраст не может быть отрицательным числом");
         }
     }
 

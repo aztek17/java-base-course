@@ -5,30 +5,36 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    // test data: Павел  Андреевич  =  10000;  Анна Петровна = 2000; Борис = 10
-    // test data: Хлеб = 40; Молоко = 60; Торт = 800, 15%; Кофе растворимый = 432, 50%;
+    // test data: Павел  Андреевич  =  3000, 45; Дмитрий Сергеевич = 500, 50; Анна Петровна = 2000, 70; Дед Евгений = 650, 88; Никита = 10, 5; Борис = 10000, 8
+    // test data: Хлеб = 40; Молоко = 60; Масло = 100; Торт = 800, 15%; Кофе растворимый = 432, 50%; Кукуруза = 340, 20%
     /*
     test data:
     Павел Андреевич Хлеб
-    Павел Андреевич Масло
+    Павел Андреевич Торт
+    Дмитрий Сергеевич Торт
     Анна Петровна Кофе растворимый
-    Анна Петровна Молоко
-    Анна Петровна Молоко
     Анна Петровна Молоко
     Анна Петровна Торт
     Борис Торт
     Павел Андреевич  Торт
+    Борис Кофе растворимый
+    Борис Молоко
+    Борис Масло
+    Борис Хлеб
+    Дед Евгений Молоко
+    Дед Евгений Кофе растворимый
+    Никита Хлеб
     END
      */
 
     public static void main(String[] args) {
-//        Person[] persons = inputBuyers();
+        Person[] persons = inputBuyers();
         Product[] products = inputProducts();
         printDiscountSign(products);
-//        inputBuy(persons, products);
-//        for (Person person : persons) {
-//            System.out.println(person);
-//        }
+        inputBuy(persons, products);
+        for (Person person : persons) {
+            System.out.println(person);
+        }
     }
 
     private static Person[] inputBuyers() {
@@ -38,10 +44,7 @@ public class App {
 
         Person[] persons = new Person[buyers.length];
         for (int i = 0; i < buyers.length; i++) {
-            persons[i] = new Person(
-                    buyers[i].split("=")[0].trim().replaceAll("\\s+", " "),
-                    Integer.parseInt(buyers[i].split("=")[1].trim().replaceAll("^-?\\\\d+", ""))
-            );
+            persons[i] = createPerson(buyers[i]);
         }
         return persons;
     }
@@ -56,7 +59,10 @@ public class App {
             if (!inputListProducts[i].contains("%")) {
                 products[i] = new Product(
                         inputListProducts[i].split("=")[0].trim().replaceAll("\\s+", " "),
-                        Integer.parseInt(inputListProducts[i].split("=")[1].replaceAll("[^0-9]", ""))
+                        Integer.parseInt(inputListProducts[i]
+                                .split("=")[1]
+                                .split(",")[0]
+                                .replaceAll("[^0-9]", ""))
                 );
             } else {
                 products[i] = new DiscountProduct(
@@ -107,5 +113,31 @@ public class App {
         }
         System.out.println("Обычные продукты: " + baseProducts);
         System.out.println("Акционные продукты: " + discountProducts);
+    }
+
+    private static Person createPerson(String buyer) {
+        String personName = buyer
+                .split("=")[0]
+                .trim()
+                .replaceAll("\\s+", " ");
+        int personCash = Integer.parseInt(buyer
+                .split("=")[1]
+                .trim()
+                .split(",")[0]
+                .trim()
+                .replaceAll("^-?\\\\d+", ""));
+        int personAge = Integer.parseInt(buyer
+                .split("=")[1]
+                .trim()
+                .split(",")[1]
+                .trim());
+
+        if (personAge <= 17) {
+            return new Child(personName, personCash, personAge);
+        } else if (personAge >= 65) {
+            return new Pensioner(personName, personCash, personAge);
+        } else {
+            return new Adult(personName, personCash, personAge);
+        }
     }
 }
