@@ -14,11 +14,10 @@ public class DragRace extends Race {
 
     @Override
     public String toString() {
-        return "Драг гонка " +
-                "длина гонки: " + length +
+        return "**Драг гонка** " +
+                "\nдлина гонки: " + length +
                 ", маршрут: '" + route + '\'' +
                 ", призовой фонд: " + prizeFund +
-                ", участники гонки: " + Arrays.toString(racers) +
-                '}';
+                ", участники гонки: " + Arrays.toString(racers);
     }
 }

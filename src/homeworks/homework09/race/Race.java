@@ -55,12 +55,11 @@ public class Race {
 
     @Override
     public String toString() {
-        return "Обычная гонка " +
-                "длина гонки: " + length +
+        return "**Обычная гонка** " +
+                "\nдлина гонки: " + length +
                 ", маршрут: '" + route + '\'' +
                 ", призовой фонд: " + prizeFund +
-                ", участники гонки: " + Arrays.toString(racers) +
-                '}';
+                ", участники гонки: " + Arrays.toString(racers);
     }
 
     @Override

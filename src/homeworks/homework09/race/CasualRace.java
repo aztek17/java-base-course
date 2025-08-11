@@ -14,11 +14,10 @@ public class CasualRace extends Race {
 
     @Override
     public String toString() {
-        return "Городская гонка " +
-                "длина гонки: " + length +
+        return "**Городская гонка** " +
+                "\nдлина гонки: " + length +
                 ", маршрут: '" + route + '\'' +
                 ", призовой фонд: " + prizeFund +
-                ", участники гонки: " + Arrays.toString(racers) +
-                '}';
+                ", участники гонки: " + Arrays.toString(racers);
     }
 }
