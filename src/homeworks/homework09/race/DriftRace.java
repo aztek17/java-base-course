@@ -14,7 +14,7 @@ public class DriftRace extends Race {
 
     @Override
     public String toString() {
-        return "Дрифт гонка " +
+        return "\n* Дрифт гонка * - " +
                 "длина гонки: " + length +
                 ", маршрут: '" + route + '\'' +
                 ", призовой фонд: " + prizeFund +

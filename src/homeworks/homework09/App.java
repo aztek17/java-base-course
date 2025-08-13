@@ -34,7 +34,10 @@ public class App {
         garage.upgradeCar(mcLaren);
         garage.upgradeCar(ferrari);
 
-        System.out.println("Информация об автомобилях в гараже после тюнинга: " + Arrays.toString(garage.getParkedCars()));
+        Race[] finishRaces = {monaco, tokio};
+
+        System.out.println("\nИнформация об автомобилях в гараже после тюнинга: " + Arrays.toString(garage.getParkedCars()));
+        System.out.println("\nИнформация об проводимых гонках: " + Arrays.toString(finishRaces));
     }
 
 }

@@ -14,7 +14,7 @@ public class DragRace extends Race {
 
     @Override
     public String toString() {
-        return "Драг гонка " +
+        return "\n* Драг гонка * - " +
                 "длина гонки: " + length +
                 ", маршрут: '" + route + '\'' +
                 ", призовой фонд: " + prizeFund +

@@ -14,7 +14,7 @@ public class CasualRace extends Race {
 
     @Override
     public String toString() {
-        return "Городская гонка " +
+        return "\n*Городская гонка* - " +
                 "длина гонки: " + length +
                 ", маршрут: '" + route + '\'' +
                 ", призовой фонд: " + prizeFund +

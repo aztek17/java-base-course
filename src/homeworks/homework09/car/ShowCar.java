@@ -47,7 +47,7 @@ public class ShowCar extends Car {
 
     @Override
     public String toString() {
-        return "\nShow Car " +
+        return "\n-Show Car " +
                 "stars=" + stars +
                 ", brand='" + brand + '\'' +
                 ", power=" + power +

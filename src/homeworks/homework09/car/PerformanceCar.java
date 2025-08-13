@@ -63,7 +63,7 @@ public class PerformanceCar extends Car {
 
     @Override
     public String toString() {
-        return "\nSport Car " +
+        return "\n-Sport Car " +
                 "addOns=" + Arrays.toString(addOns) +
                 ", brand='" + brand + '\'' +
                 ", power=" + power +

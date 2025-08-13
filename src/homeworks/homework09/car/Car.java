@@ -118,7 +118,7 @@ public class Car {
 
     @Override
     public String toString() {
-        return "\nBase Car " +
+        return "\n-Base Car: " +
                 "brand='" + brand + '\'' +
                 ", power=" + power +
                 ", turbo=" + turbo +
