@@ -6,11 +6,18 @@ import homeworks.homework09.car.ShowCar;
 import homeworks.homework09.garage.Garage;
 import homeworks.homework09.race.*;
 
+import java.io.*;
 import java.util.Arrays;
 
 public class App {
 
     public static void main(String[] args) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("resources/inputRaces.txt"))) {
+            // TODO: Добавить парсинг из файла
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+
         Car juke = new Car("Nissan", "Juke", 2015, 100, 40, 100, 100);
         Car niva = new Car("Lada", "Niva", 2010, 80, 20, 150, 60);
         Car ferrari = new PerformanceCar("Ferrari", "Roma", 2023, 620, 270, 60, 70);
@@ -41,6 +48,15 @@ public class App {
         System.out.println("\n--Список завершенных гонок--");
         for (Race finishedRace : allFinishedRaces) {
             System.out.println("\n" + finishedRace.toString());
+        }
+    }
+
+    public static void writeToFile(String text) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("resources/output/outputRaces.txt", true))) {
+            writer.write(String.valueOf(text));
+            writer.newLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
