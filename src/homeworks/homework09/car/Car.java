@@ -101,7 +101,9 @@ public class Car {
         if (o == null || getClass() != o.getClass()) return false;
 
         Car car = (Car) o;
-        return yearOfManufactured == car.yearOfManufactured && power == car.power && turbo == car.turbo && suspension == car.suspension && durability == car.durability && Objects.equals(brand, car.brand) && Objects.equals(model, car.model);
+        return yearOfManufactured == car.yearOfManufactured && power == car.power && turbo == car.turbo &&
+                suspension == car.suspension && durability == car.durability && Objects.equals(brand, car.brand) &&
+                Objects.equals(model, car.model);
     }
 
     @Override
