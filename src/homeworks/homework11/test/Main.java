@@ -1,11 +1,15 @@
-package homeworks.homework11Additional;
+package homeworks.homework11.test;
+
+import homeworks.homework11.model.Car;
+import homeworks.homework11.repository.CarRepository;
+import homeworks.homework11.repository.CarRepositoryImpl;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Main2 {
+public class Main {
     private static final String colorToFind = "Black";
     private static final long mileageToFind = 0;
     private static final long minPrice = 700000;
@@ -21,7 +25,8 @@ public class Main2 {
 
         String colorOrWithoutMileage = carList
                 .stream()
-                .filter(colorOrMileageFilter -> (colorOrMileageFilter.getColor().equals(colorToFind)) || colorOrMileageFilter.getMileage() == mileageToFind)
+                .filter(colorOrMileageFilter -> (colorOrMileageFilter.getColor().equals(colorToFind))
+                        || colorOrMileageFilter.getMileage() == mileageToFind)
                 .map(Car::getNumber)
                 .collect(Collectors.joining(" "));
         repository.save("Номера автомобилей по цвету или пробегу: " + colorOrWithoutMileage);

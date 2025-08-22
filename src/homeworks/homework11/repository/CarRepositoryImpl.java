@@ -1,4 +1,6 @@
-package homeworks.homework11Additional;
+package homeworks.homework11.repository;
+
+import homeworks.homework11.model.Car;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ public class CarRepositoryImpl implements CarRepository {
     @Override
     public List<Car> findAll() {
         List<Car> carList = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/homeworks/homework11Additional/input.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/homeworks/homework11/data/input.txt"))) {
             while (true) {
                 String nextLine = reader.readLine();
                 if (nextLine == null) {
@@ -33,7 +35,7 @@ public class CarRepositoryImpl implements CarRepository {
 
     @Override
     public void save(String text) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/homeworks/homework11Additional/output.txt", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/homeworks/homework11/data/output.txt", true))) {
             writer.write(text);
             writer.newLine();
         } catch (IOException e) {
