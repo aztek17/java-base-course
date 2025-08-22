@@ -1,4 +1,4 @@
-package homeworks.homework11;
+package homeworks.homework11.model;
 
 import java.util.Objects;
 
@@ -86,7 +86,7 @@ public class Car {
     @Override
     public String toString() {
         return "\n" + separator + number +
-                separator+ model +
+                separator + model +
                 separator + color +
                 separator + mileage +
                 separator + cost;
