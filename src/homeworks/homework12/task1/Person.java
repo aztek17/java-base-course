@@ -1,4 +1,4 @@
-package homeworks.homework12;
+package homeworks.homework12.task1;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

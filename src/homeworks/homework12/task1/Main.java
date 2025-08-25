@@ -1,4 +1,4 @@
-package homeworks.homework12;
+package homeworks.homework12.task1;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
