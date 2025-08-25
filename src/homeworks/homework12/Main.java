@@ -12,7 +12,7 @@ public class Main {
         try {
             Person person = new Person(input.nextLine());
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/homeworks/homework12/" +
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/homeworks/homework12/task1/" +
                     person.getLastName() + ".txt", true))) {
                 writer.write(person.toString());
                 writer.newLine();
