@@ -1,7 +1,7 @@
 package homeworks.homework13.utils;
 
 public class NumberConverter {
-    public int parseCount(String text) {
+    public static int parseCount(String text) {
         try {
             return Integer.parseInt(text);
         } catch (NumberFormatException exception) {
@@ -9,7 +9,7 @@ public class NumberConverter {
         }
     }
 
-    public int validateCount(String text) throws RuntimeException {
+    public static int validateCount(String text) throws RuntimeException {
         try {
             return parseCount(text);
         } catch (IllegalArgumentException exception) {
@@ -17,7 +17,7 @@ public class NumberConverter {
         }
     }
 
-    public double parseNumber(String text) throws IllegalArgumentException {
+    public static double parseNumber(String text) throws IllegalArgumentException {
         try {
             return Double.parseDouble(text);
         } catch (NumberFormatException exception) {
@@ -25,7 +25,7 @@ public class NumberConverter {
         }
     }
 
-    public double validateNumber(String text) throws RuntimeException {
+    public static double validateNumber(String text) throws RuntimeException {
         try {
             return parseNumber(text);
         } catch (IllegalArgumentException exception) {
