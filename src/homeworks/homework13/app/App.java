@@ -88,19 +88,19 @@ public class App {
                     .split("=")[1]
                     .trim()
                     .split(",")[0]
-                    .trim());
-            // TODO: Тут был .replaceAll("^-?\\\\d+", "")); но мы тестируем exceptions
+                    .trim()
+                    .replaceAll("^-?\\\\d+", ""));
         } catch (RuntimeException exceptionCash) {
             System.out.println("Не удалось считать значение количества денег для " + personName + ":\n" + exceptionCash.getMessage());
         }
 
         int personAge = -1;
         try {
-        personAge = NumberConverter.validateCount(buyer
-                .split("=")[1]
-                .trim()
-                .split(",")[1]
-                .trim());
+            personAge = NumberConverter.validateCount(buyer
+                    .split("=")[1]
+                    .trim()
+                    .split(",")[1]
+                    .trim());
         } catch (RuntimeException exceptionAge) {
             System.out.println("Не удалось считать значение возраста для " + personName + ":\n" + exceptionAge.getMessage());
         }
