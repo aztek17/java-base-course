@@ -28,7 +28,7 @@ public class Adult extends Person {
     }
 
     @Override
-    public void setAmountMoney(int amountMoney) {
+    public void setAmountMoney(Integer amountMoney) {
         if (amountMoney >= 0) {
             super.setAmountMoney(amountMoney);
         } else if (isBuyCredit()) {

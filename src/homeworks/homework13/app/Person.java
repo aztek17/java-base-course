@@ -1,5 +1,8 @@
 package homeworks.homework13.app;
 
+import homeworks.homework13.exception.WrongConditionException;
+import homeworks.homework13.utils.ValidateValue;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +36,12 @@ public class Person {
         return amountMoney;
     }
 
-    public void setAmountMoney(int amountMoney) {
-        if (amountMoney >= 0) {
-            this.amountMoney = amountMoney;
-        } else {
-            App.writeToFile("Деньги не могут быть отрицательными");
+    public void setAmountMoney(Integer amountMoney) {
+        try {
+            this.amountMoney = (int) new ValidateValue().validate(amountMoney,
+                    condition -> condition.intValue() >= 0);
+        } catch (WrongConditionException exception) {
+            App.writeToFile("Ошибка назначения количества денег для " + this.getName() + ": " + exception.getMessage());
         }
     }
 
@@ -63,7 +67,7 @@ public class Person {
         if (age >= 0) {
             this.age = age;
         } else {
-            App.writeToFile("Возвраст не может быть отрицательным числом");
+            App.writeToFile("Возраст не может быть отрицательным числом");
         }
     }
 
