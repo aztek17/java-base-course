@@ -1,7 +1,7 @@
 package homeworks.homework13.app;
 
 import homeworks.homework13.exception.WrongConditionException;
-import homeworks.homework13.utils.ValidateValue;
+import homeworks.homework13.utils.CheckCondition;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class Person {
     public Person(String name, int amountMoney, int age) throws IOException {
         setName(name);
         setAmountMoney(amountMoney);
-        this.age = age;
+        setAge(age);
     }
 
     public String getName() {
@@ -38,10 +38,10 @@ public class Person {
 
     public void setAmountMoney(Integer amountMoney) {
         try {
-            this.amountMoney = (int) new ValidateValue().validate(amountMoney,
+            this.amountMoney = (int) new CheckCondition().validate(amountMoney,
                     condition -> condition.intValue() >= 0);
         } catch (WrongConditionException exception) {
-            App.writeToFile("Ошибка назначения количества денег для " + this.getName() + ": " + exception.getMessage());
+            App.writeToFile(exception.getMessage() + "Деньги не могут быть отрицательным числом");
         }
     }
 
@@ -50,12 +50,14 @@ public class Person {
     }
 
     public void addProduct(Product product) throws IOException {
-        if (getAmountMoney() >= product.getProductPrice()) {
+        try {
+            new CheckCondition().validate(getAmountMoney(),
+                    condition -> condition.intValue() >= product.getProductPrice());
             this.products.add(product);
             setAmountMoney(getAmountMoney() - product.getProductPrice());
             App.writeToFile(getName() + " купил " + product.getProductName());
-        } else {
-            App.writeToFile(getName() + " не может позволить себе " + product.getProductName());
+        } catch (WrongConditionException exception) {
+            App.writeToFile(exception.getMessage() + getName() + " не может позволить себе " + product.getProductName());
         }
     }
 
@@ -64,10 +66,10 @@ public class Person {
     }
 
     public void setAge(int age) {
-        if (age >= 0) {
-            this.age = age;
-        } else {
-            App.writeToFile("Возраст не может быть отрицательным числом");
+        try {
+            this.age = (int) new CheckCondition().validate(age, condition -> condition.intValue() >= 0);
+        } catch (WrongConditionException exception) {
+            App.writeToFile(exception.getMessage() + "Возраст не может быть отрицательным числом");
         }
     }
 
