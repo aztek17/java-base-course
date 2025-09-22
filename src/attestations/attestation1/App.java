@@ -25,7 +25,7 @@ public class App {
 
         // Выгрузка всех пользователей
         List<User> allUsers = repository.findAll();
-        System.out.println("\nВыгрузка всего списка пользователей: " + allUsers.toString());
+        System.out.println("\nВыгрузка всего списка пользователей: " + allUsers);
 
         User patchData = new User("f5a8a3cb-4ac9-4b3b-8a65-c425e129b9d2|2001-12-25T19:10:11.556|new_login_2|789ghs|789ghs|Хвостов|Виктор|Павлович|30|false");
         System.out.println("\nОбновление пользователя ДО: " + repository.findById("f5a8a3cb-4ac9-4b3b-8a65-c424e129b9d2"));
