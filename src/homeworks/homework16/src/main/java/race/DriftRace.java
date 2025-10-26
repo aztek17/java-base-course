@@ -1,16 +1,13 @@
 package race;
 
-import car.Car;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class DriftRace extends Race {
-    public DriftRace(int length, String route, int prizeFund, Car[] racers) {
-        super(length, route, prizeFund, racers);
-    }
-
-    public DriftRace() {
-    }
 
     @Override
     public String toString() {

@@ -3,23 +3,18 @@ package garage;
 import car.Car;
 import car.PerformanceCar;
 import car.ShowCar;
+import lombok.*;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Garage {
     Car[] parkedCars;
-
-    public Garage(Car[] parkedCars) {
-        this.parkedCars = parkedCars;
-    }
-
-    public Garage() {
-    }
-
-    public Car[] getParkedCars() {
-        return parkedCars;
-    }
 
     public void setParkedCars(Car[] parkedCars) {
         this.parkedCars = parkedCars;
@@ -57,22 +52,4 @@ public class Garage {
         return scanner.nextLine();
     }
 
-    @Override
-    public String toString() {
-        return "Garage " +
-                "parked cars=" + Arrays.toString(parkedCars);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Garage garage = (Garage) o;
-        return Arrays.equals(parkedCars, garage.parkedCars);
-    }
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(parkedCars);
-    }
 }

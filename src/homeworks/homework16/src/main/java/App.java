@@ -12,11 +12,11 @@ public class App {
 
     public static void main(String[] args) {
         Car juke = new Car("Nissan", "Juke", 2015, 100, 40, 100, 100);
-        Car niva = new Car("Lada", "Niva", 2010, 80, 20, 150,60);
-        Car ferrari = new PerformanceCar("Ferrari" , "Roma", 2023, 620, 270, 60, 70);
-        Car mcLaren = new PerformanceCar("McLaren" , "720s", 2023, 720, 250, 50, 75);
-        Car mercedes = new ShowCar("Mercedes", "E55 AMG", 2007,500, 80,80,50);
-        Car toyota = new ShowCar("Toyota", "Supra", 2002,470, 200,50,70);
+        Car niva = new Car("Lada", "Niva", 2010, 80, 20, 150, 60);
+        Car ferrari = new PerformanceCar("Ferrari", "Roma", 2023, 620, 270, 60, 70);
+        Car mcLaren = new PerformanceCar("McLaren", "720s", 2023, 720, 250, 50, 75);
+        Car mercedes = new ShowCar("Mercedes", "E55 AMG", 2007, 500, 80, 80, 50);
+        Car toyota = new ShowCar("Toyota", "Supra", 2002, 470, 200, 50, 70);
 
         Garage garage = new Garage();
 
