@@ -3,7 +3,6 @@ package car;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@ToString
 public class PerformanceCar extends Car {
     String[] addOns;
 
@@ -53,4 +51,14 @@ public class PerformanceCar extends Car {
         return listUpgrade;
     }
 
+    @Override
+    public String toString() {
+        return "\n-Sport Car " +
+                "addOns=" + Arrays.toString(addOns) +
+                ", brand='" + brand + '\'' +
+                ", power=" + power +
+                ", turbo=" + turbo +
+                ", suspension=" + suspension +
+                ", durability=" + durability;
+    }
 }

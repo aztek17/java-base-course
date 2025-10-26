@@ -8,7 +8,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString
 @Setter
 @Getter
 public class Car {
@@ -28,6 +27,16 @@ public class Car {
             add("suspension");
             add("durability");
         }};
+    }
+
+    @Override
+    public String toString() {
+        return "\n-Base Car: " +
+                "brand='" + brand + '\'' +
+                ", power=" + power +
+                ", turbo=" + turbo +
+                ", suspension=" + suspension +
+                ", durability=" + durability;
     }
 }
 

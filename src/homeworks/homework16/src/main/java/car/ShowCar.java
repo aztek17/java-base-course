@@ -3,14 +3,12 @@ package car;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@ToString
 public class ShowCar extends Car {
     int stars;
 
@@ -29,5 +27,16 @@ public class ShowCar extends Car {
         listUpgrade = super.getListUpgrade();
         listUpgrade.add("stars");
         return listUpgrade;
+    }
+
+    @Override
+    public String toString() {
+        return "\n-Show Car " +
+                "stars=" + stars +
+                ", brand='" + brand + '\'' +
+                ", power=" + power +
+                ", turbo=" + turbo +
+                ", suspension=" + suspension +
+                ", durability=" + durability;
     }
 }
