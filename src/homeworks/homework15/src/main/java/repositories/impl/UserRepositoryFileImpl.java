@@ -20,7 +20,7 @@ public class UserRepositoryFileImpl implements UserRepository {
     private final List<User> USERS = new ArrayList<>();
     private static final String FILE_NAME = "users.txt";
     private static final String FILE_PATH = "src/main/resources/";
-    // Для запуска из IDE заменить FILE_PATH на полный путь src/homeworks/homeworks15/src/main/resources/
+    // Для запуска из IDE заменить FILE_PATH на полный путь src/homeworks/homework15/src/main/resources/
 
     @Override
     public void create(User user) {

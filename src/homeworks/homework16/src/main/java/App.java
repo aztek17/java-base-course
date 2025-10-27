@@ -1,22 +1,24 @@
 import car.Car;
-import car.PerformanceCar;
-import car.ShowCar;
 import garage.Garage;
 import race.CasualRace;
 import race.DriftRace;
 import race.Race;
+import repository.CarRepository;
+import repository.impl.CarRepositoryImpl;
 
 import java.util.Arrays;
 
 public class App {
 
     public static void main(String[] args) {
-        Car juke = new Car("Nissan", "Juke", 2015, 100, 40, 100, 100);
-        Car niva = new Car("Lada", "Niva", 2010, 80, 20, 150, 60);
-        Car ferrari = new PerformanceCar("Ferrari", "Roma", 2023, 620, 270, 60, 70);
-        Car mcLaren = new PerformanceCar("McLaren", "720s", 2023, 720, 250, 50, 75);
-        Car mercedes = new ShowCar("Mercedes", "E55 AMG", 2007, 500, 80, 80, 50);
-        Car toyota = new ShowCar("Toyota", "Supra", 2002, 470, 200, 50, 70);
+        CarRepository repository = new CarRepositoryImpl();
+
+        Car juke = repository.findByModel("Juke");
+        Car niva = repository.findByModel("Niva");
+        Car ferrari = repository.findByModel("Roma");
+        Car mcLaren = repository.findByModel("720s");
+        Car mercedes = repository.findByModel("E55 AMG");
+        Car toyota = repository.findByModel("Supra");
 
         Garage garage = new Garage();
 
@@ -25,7 +27,7 @@ public class App {
         Car[] tokioRacers = {mercedes, toyota};
         Race tokio = new DriftRace(7800, "Tokio Central Square - Abandoned Village", 3000, tokioRacers);
 
-        Car[] parkedCars = {niva, mcLaren};
+        Car[] parkedCars = {niva, mcLaren, ferrari};
         garage.setParkedCars(parkedCars);
 
         garage.upgradeCar(niva);

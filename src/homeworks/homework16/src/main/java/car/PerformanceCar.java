@@ -13,14 +13,8 @@ import java.util.List;
 public class PerformanceCar extends Car {
     String[] addOns;
 
-    public PerformanceCar(String brand, String model, int yearOfManufactured, int power, int turbo, int suspension, int durability) {
-        super(brand,
-                model,
-                yearOfManufactured,
-                (int) (power * 1.5),
-                turbo,
-                (int) (suspension * 0.75),
-                durability);
+    public PerformanceCar(String data) {
+        super(data);
     }
 
     public void setAddOns(String newAddOn) {

@@ -12,8 +12,8 @@ import java.util.List;
 public class ShowCar extends Car {
     int stars;
 
-    public ShowCar(String brand, String model, int yearOfManufactured, int power, int turbo, int suspension, int durability) {
-        super(brand, model, yearOfManufactured, power, turbo, suspension, durability);
+    public ShowCar(String data) {
+        super(data);
         setStars(0);
     }
 
