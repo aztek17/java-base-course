@@ -14,20 +14,27 @@ import java.util.List;
 public class CarRepositoryImpl implements CarRepository {
 
     private final List<Car> LIST_CARS = new ArrayList<>();
-        private static final String FILE_PATH = "src/main/resources/cars.txt";
-    // Для запуска из IDE заменить FILE_PATH на полный путь src/homeworks/homeworks16/src/main/resources/cars.txt
+    //        private static final String FILE_PATH = "src/main/resources/cars.txt";
+    private static final String FILE_PATH = "src/homeworks/homework16/src/main/resources/cars.txt";
+    // Для запуска из IDE заменить FILE_PATH на полный путь src/homeworks/homework16/src/main/resources/cars.txt
 
     public CarRepositoryImpl() {
-        LIST_CARS.addAll(readFile());
+        LIST_CARS.addAll(readFile(FILE_PATH));
     }
 
-    private List<Car> readFile() {
+    public CarRepositoryImpl(String path) {
+        LIST_CARS.addAll(readFile(path));
+    }
+
+    private List<Car> readFile(String filePath) {
         final List<Car> carsFromFile = new ArrayList<>();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
             for (String carLine : bufferedReader.lines().toList()) {
                 String[] parts = carLine.split(",");
+                if (parts.length != 8) {
+                    throw new IllegalArgumentException("Количество аргументов после разбора строки не соответствует необходимому");
+                }
                 String carType = parts[0].trim();
-
                 switch (carType) {
                     case "BASE":
                         carsFromFile.add(new Car(carLine));
