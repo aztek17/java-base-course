@@ -1,45 +1,36 @@
 import car.Car;
 import car.ShowCar;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.CarRepository;
 import repository.impl.CarRepositoryImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CarRepositoryImplTests {
-    // Разделитель точка
-    // Тип машины не в switch/case к примеру DRIFT
-    // Пропущен параметр для создания объекта
-    // findAll проверить количество в List
-    // findByModel проверить количество и частично или полностью поля
-    private static final String FILE_PATH = "src/main/resources/cars.txt";
-    private static final String PATH_WRONG_SEPARATOR = "src/main/resources/wrongSeparator.txt";
-    private static final String PATH_SKIPPED_PARAM = "src/main/resources/skippedParam.txt";
-
-//    @BeforeEach
-//    void setup() {
-//        new CarRepositoryImpl(FILE_PATH);
-//    }
+    private static final String FILE_PATH = "src/test/resources/cars.txt";
+    private static final String PATH_WRONG_SEPARATOR = "src/test/resources/wrongSeparator.txt";
+    private static final String PATH_SKIPPED_PARAM = "src/test/resources/skippedParam.txt";
 
     @Test
     void invalidParamsSeparator() {
-        Assertions.assertThrows(IllegalAccessException.class, () -> new CarRepositoryImpl(PATH_WRONG_SEPARATOR));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new CarRepositoryImpl(PATH_WRONG_SEPARATOR));
     }
 
     @Test
     void skippedParam() {
-        Assertions.assertThrows(IllegalAccessException.class, () -> new CarRepositoryImpl(PATH_SKIPPED_PARAM));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new CarRepositoryImpl(PATH_SKIPPED_PARAM));
     }
 
     @Test
     void unknownCarType() {
         CarRepository repository = new CarRepositoryImpl(FILE_PATH);
-        List<Car> cars = repository.findAll();
-        for (Car car: cars) {
-            Assertions.assertNotEquals("SAMOSVAL", car.getType());
-        }
+        Assertions.assertEquals(6, repository.findAll().size()); // first step
+
+        List<String> expectedTypes = Arrays.asList("SHOW", "SPORT", "BASE"); // second step
+        repository.findAll()
+                .forEach(validate -> Assertions.assertTrue(expectedTypes.contains(validate.getType())));
     }
 
     @Test
