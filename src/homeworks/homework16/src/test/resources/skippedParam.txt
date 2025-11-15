@@ -1,0 +1,3 @@
+BASE,Nissan,Juke,2015,100,40,100
+Lada,Niva,2010,80,20,150,60
+SPORT,Ferrari,Roma,2023,620
