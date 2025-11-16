@@ -16,7 +16,8 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public Orders getOrdersById(int id) {
-        return ordersRepository.getReferenceById(id);
+        return ordersRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Заказ с ID: " + id + " не найден"));
     }
 
     @Override
