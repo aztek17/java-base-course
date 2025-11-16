@@ -2,7 +2,7 @@ package ru.base.shop.model;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "orders")
@@ -17,7 +17,7 @@ public class Orders {
     private Customer customer;
 
     @Column(name = "order_date")
-    private Date orderDate;
+    private LocalDate orderDate;
 
     @Column(name = "count_order")
     private Integer countOrder;
