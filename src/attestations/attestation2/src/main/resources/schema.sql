@@ -32,8 +32,8 @@ create table if not exists shop.orders (
     order_date date not null default current_date,
     count int not null check (count > 0),
     
-    foreign key (product_id) references shop.products(id),
-    foreign key (customer_id) references shop.customers(id)
+    foreign key (product_id) references shop.products(id) on delete cascade,
+    foreign key (customer_id) references shop.customers(id) on delete cascade
 );
 -- Описание таблицы orders
 comment on table shop.orders is 'Информация о заказах';
@@ -57,7 +57,7 @@ insert into shop.products (description, price, count) values
 ('Кабель оптический Philips ODT Toslink', 3000, 5);
 
 -- Заполнение таблицы customers
-insert into shop.customers (name) values
+insert into shop.customers (names) values
 ('Иванов Сергей'),
 ('Ромашкина Мария'),
 ('Гусев Максим'),
@@ -66,7 +66,7 @@ insert into shop.customers (name) values
 ('Смотрелов Денис'),
 ('Летный Евгений'),
 ('Далеков Игорь'),
-('Светлова инна'),
+('Светлова Инна'),
 ('Маркова Ангелина');
 
 -- Заполнение таблицы orders
