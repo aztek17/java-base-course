@@ -2,6 +2,7 @@ package ru.demo.tv.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.data.metrics.DefaultRepositoryTagsProvider;
 import org.springframework.stereotype.Service;
 import ru.demo.tv.dto.TvDto;
 import ru.demo.tv.model.Tv;
@@ -15,14 +16,7 @@ public class TvService {
 
     private final TvRepository repository;
 
-    public TvDto getTvById(Long id) {
-        return TvDto.from(repository.findById(id).orElseThrow(()
-                -> new EntityNotFoundException("Телевизор с ID: " + id + " не найден!")));
-    }
-
-    public List<TvDto> getAllTvs() {
-        return TvDto.from(repository.findAll());
-    }
+    private final DefaultRepositoryTagsProvider repositoryTagsProvider;
 
     public TvDto createTv(TvDto dto) {
         Tv tv = Tv.builder()
@@ -35,6 +29,19 @@ public class TvService {
 
         Tv savedTv = repository.save(tv);
         return TvDto.from(savedTv);
+    }
+
+    public TvDto getTvById(Long id) {
+        return TvDto.from(repository.findById(id).orElseThrow(()
+                -> new EntityNotFoundException("Телевизор с ID: " + id + " не найден!")));
+    }
+
+    public List<TvDto> getTvByModel(String model) {
+        return TvDto.from(repository.findByModel(model));
+    }
+
+    public List<TvDto> getAllTvs() {
+        return TvDto.from(repository.findAll());
     }
 
     public TvDto updateTv(Long id, TvDto dto) {
