@@ -16,8 +16,6 @@ public class TvService {
 
     private final TvRepository repository;
 
-    private final DefaultRepositoryTagsProvider repositoryTagsProvider;
-
     public TvDto createTv(TvDto dto) {
         Tv tv = Tv.builder()
                 .brand(dto.getBrand())
@@ -36,8 +34,8 @@ public class TvService {
                 -> new EntityNotFoundException("Телевизор с ID: " + id + " не найден!")));
     }
 
-    public List<TvDto> getTvByModel(String model) {
-        return TvDto.from(repository.findByModel(model));
+    public List<TvDto> getTvByBrand(String brand) {
+        return TvDto.from(repository.findByBrand(brand));
     }
 
     public List<TvDto> getAllTvs() {

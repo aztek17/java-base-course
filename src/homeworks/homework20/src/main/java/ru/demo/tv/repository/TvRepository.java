@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface TvRepository extends JpaRepository<Tv, Long> {
-    List<Tv> findByModel(String model);
+    List<Tv> findByBrand(String brand);
 }
