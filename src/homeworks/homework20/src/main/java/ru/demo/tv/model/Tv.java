@@ -8,7 +8,7 @@ import lombok.*;
 @Entity
 @Builder
 @ToString
-@Table(name = "TV")
+@Table(name = "tv", schema = "televisions")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tv {

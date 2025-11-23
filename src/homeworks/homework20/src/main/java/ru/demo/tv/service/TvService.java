@@ -2,7 +2,6 @@ package ru.demo.tv.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.data.metrics.DefaultRepositoryTagsProvider;
 import org.springframework.stereotype.Service;
 import ru.demo.tv.dto.TvDto;
 import ru.demo.tv.model.Tv;
