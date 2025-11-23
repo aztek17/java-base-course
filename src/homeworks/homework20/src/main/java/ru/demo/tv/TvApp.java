@@ -1,0 +1,11 @@
+package ru.demo.tv;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class TvApp {
+    public static void main(String[] args) {
+        SpringApplication.run(TvApp.class, args);
+    }
+}
