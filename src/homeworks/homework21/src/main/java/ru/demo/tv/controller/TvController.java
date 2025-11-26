@@ -64,7 +64,8 @@ public class TvController {
             @ApiResponse(responseCode = "200", description = "Телевизор получен"),
             @ApiResponse(responseCode = "400", description = "Запрос составлен некорректно", content = @Content(
                     schema = @Schema(hidden = true)
-            ))
+            )),
+            @ApiResponse(responseCode = "404", description = "Телевизор с таким ID не найден")
     })
     public ResponseEntity<TvDtoResponse> getTvById(@PathVariable("id") Long id) {
         return ResponseEntity
@@ -96,7 +97,8 @@ public class TvController {
             @ApiResponse(responseCode = "200", description = "Телевизор изменен успешно"),
             @ApiResponse(responseCode = "400", description = "Запрос составлен некорректно", content = @Content(
                     schema = @Schema(hidden = true)
-            ))
+            )),
+            @ApiResponse(responseCode = "404", description = "Телевизор с таким ID не найден")
     })
     public ResponseEntity<TvDtoResponse> updateTv(
             @PathVariable("id") Long id,
@@ -114,7 +116,8 @@ public class TvController {
             @ApiResponse(responseCode = "200", description = "Телевизор удален"),
             @ApiResponse(responseCode = "400", description = "Запрос составлен некорректно", content = @Content(
                     schema = @Schema(hidden = true)
-            ))
+            )),
+            @ApiResponse(responseCode = "404", description = "Телевизор с таким ID не найден")
     })
     public ResponseEntity<TvDtoResponse> deleteTv(@PathVariable("id") Long id) {
         service.deleteTv(id);

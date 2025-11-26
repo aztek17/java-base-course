@@ -1,8 +1,9 @@
 package ru.demo.tv.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import ru.demo.tv.dto.TvDtoRequest;
 import ru.demo.tv.dto.TvDtoResponse;
 import ru.demo.tv.model.Tv;
@@ -31,7 +32,7 @@ public class TvService {
 
     public TvDtoResponse getTvById(Long id) {
         return TvDtoResponse.from(repository.findById(id).orElseThrow(()
-                -> new EntityNotFoundException("Телевизор с ID: " + id + " не найден!")));
+                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Телевизор с ID: " + id + " не найден!")));
     }
 
     public List<TvDtoResponse> getTvByBrand(String brand) {
@@ -44,7 +45,7 @@ public class TvService {
 
     public TvDtoResponse updateTv(Long id, TvDtoRequest dto) {
         Tv tv = repository.findById(id).orElseThrow(()
-                -> new EntityNotFoundException("Телевизор с ID: " + id + " не найден!"));
+                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Телевизор с ID: " + id + " не найден!"));
 
         tv.setModel(dto.getModel());
         tv.setBrand(dto.getBrand());
@@ -58,7 +59,7 @@ public class TvService {
 
     public void deleteTv(Long id) {
         Tv tv = repository.findById(id).orElseThrow(()
-                -> new EntityNotFoundException("Телевизор с ID: " + id + " не найден!"));
+                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Телевизор с ID: " + id + " не найден!"));
         repository.delete(tv);
     }
 }
