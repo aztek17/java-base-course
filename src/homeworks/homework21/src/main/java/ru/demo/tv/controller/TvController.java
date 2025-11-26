@@ -11,7 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.demo.tv.dto.TvDto;
+import ru.demo.tv.dto.TvDtoRequest;
+import ru.demo.tv.dto.TvDtoResponse;
 import ru.demo.tv.service.TvService;
 
 import java.util.List;
@@ -32,10 +33,10 @@ public class TvController {
                     schema = @Schema(hidden = true)
             ))
     })
-    public ResponseEntity<TvDto> createTv(
+    public ResponseEntity<TvDtoResponse> createTv(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true,
                     description = "Параметры телевизора")
-            @RequestBody TvDto dto) {
+            @RequestBody TvDtoRequest dto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(service.createTv(dto));
@@ -50,7 +51,7 @@ public class TvController {
                     schema = @Schema(hidden = true)
             ))
     })
-    public ResponseEntity<List<TvDto>> getTvs() {
+    public ResponseEntity<List<TvDtoResponse>> getTvs() {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(service.getAllTvs());
@@ -65,7 +66,7 @@ public class TvController {
                     schema = @Schema(hidden = true)
             ))
     })
-    public ResponseEntity<TvDto> getTvById(@PathVariable("id") Long id) {
+    public ResponseEntity<TvDtoResponse> getTvById(@PathVariable("id") Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(service.getTvById(id));
@@ -80,7 +81,7 @@ public class TvController {
                     schema = @Schema(hidden = true)
             ))
     })
-    public ResponseEntity<List<TvDto>> getTvsByBrand(
+    public ResponseEntity<List<TvDtoResponse>> getTvsByBrand(
             @Parameter(name = "brand", required = true, description = "Название модели телевизора")
             @RequestParam(name = "brand") String brand) {
         return ResponseEntity
@@ -97,10 +98,10 @@ public class TvController {
                     schema = @Schema(hidden = true)
             ))
     })
-    public ResponseEntity<TvDto> updateTv(
+    public ResponseEntity<TvDtoResponse> updateTv(
             @PathVariable("id") Long id,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, description = "Параметры телевизора")
-            @RequestBody TvDto dto) {
+            @RequestBody TvDtoRequest dto) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(service.updateTv(id, dto));
@@ -115,7 +116,7 @@ public class TvController {
                     schema = @Schema(hidden = true)
             ))
     })
-    public ResponseEntity<TvDto> deleteTv(@PathVariable("id") Long id) {
+    public ResponseEntity<TvDtoResponse> deleteTv(@PathVariable("id") Long id) {
         service.deleteTv(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
