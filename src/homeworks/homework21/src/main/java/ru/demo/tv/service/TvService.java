@@ -1,9 +1,11 @@
 package ru.demo.tv.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import ru.demo.tv.dto.TvDto;
+import org.springframework.web.server.ResponseStatusException;
+import ru.demo.tv.dto.TvDtoRequest;
+import ru.demo.tv.dto.TvDtoResponse;
 import ru.demo.tv.model.Tv;
 import ru.demo.tv.repository.TvRepository;
 
@@ -15,7 +17,7 @@ public class TvService {
 
     private final TvRepository repository;
 
-    public TvDto createTv(TvDto dto) {
+    public TvDtoResponse createTv(TvDtoRequest dto) {
         Tv tv = Tv.builder()
                 .brand(dto.getBrand())
                 .model(dto.getModel())
@@ -25,25 +27,25 @@ public class TvService {
                 .build();
 
         Tv savedTv = repository.save(tv);
-        return TvDto.from(savedTv);
+        return TvDtoResponse.from(savedTv);
     }
 
-    public TvDto getTvById(Long id) {
-        return TvDto.from(repository.findById(id).orElseThrow(()
-                -> new EntityNotFoundException("Телевизор с ID: " + id + " не найден!")));
+    public TvDtoResponse getTvById(Long id) {
+        return TvDtoResponse.from(repository.findById(id).orElseThrow(()
+                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Телевизор с ID: " + id + " не найден!")));
     }
 
-    public List<TvDto> getTvByBrand(String brand) {
-        return TvDto.from(repository.findByBrand(brand));
+    public List<TvDtoResponse> getTvByBrand(String brand) {
+        return TvDtoResponse.from(repository.findByBrand(brand));
     }
 
-    public List<TvDto> getAllTvs() {
-        return TvDto.from(repository.findAll());
+    public List<TvDtoResponse> getAllTvs() {
+        return TvDtoResponse.from(repository.findAll());
     }
 
-    public TvDto updateTv(Long id, TvDto dto) {
+    public TvDtoResponse updateTv(Long id, TvDtoRequest dto) {
         Tv tv = repository.findById(id).orElseThrow(()
-                -> new EntityNotFoundException("Телевизор с ID: " + id + " не найден!"));
+                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Телевизор с ID: " + id + " не найден!"));
 
         tv.setModel(dto.getModel());
         tv.setBrand(dto.getBrand());
@@ -52,12 +54,12 @@ public class TvService {
         tv.setScreenSize(dto.getScreenSize());
 
         repository.save(tv);
-        return TvDto.from(tv);
+        return TvDtoResponse.from(tv);
     }
 
     public void deleteTv(Long id) {
         Tv tv = repository.findById(id).orElseThrow(()
-                -> new EntityNotFoundException("Телевизор с ID: " + id + " не найден!"));
+                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Телевизор с ID: " + id + " не найден!"));
         repository.delete(tv);
     }
 }

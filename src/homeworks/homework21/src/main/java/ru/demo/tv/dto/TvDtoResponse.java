@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TvDto {
+public class TvDtoResponse {
 
     private Long id;
     private String brand;
@@ -22,8 +22,8 @@ public class TvDto {
     private boolean voiceAssistant;
     private Integer screenSize;
 
-    public static TvDto from(Tv tv) {
-        return TvDto.builder()
+    public static TvDtoResponse from(Tv tv) {
+        return TvDtoResponse.builder()
                 .id(tv.getId())
                 .brand(tv.getBrand())
                 .model(tv.getModel())
@@ -33,8 +33,8 @@ public class TvDto {
                 .build();
     }
 
-    public static List<TvDto> from(List<Tv> tvs) {
-        return tvs.stream().map(TvDto::from).collect(Collectors.toList());
+    public static List<TvDtoResponse> from(List<Tv> tvs) {
+        return tvs.stream().map(TvDtoResponse::from).collect(Collectors.toList());
     }
 
 }
