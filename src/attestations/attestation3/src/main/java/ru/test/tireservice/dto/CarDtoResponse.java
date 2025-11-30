@@ -8,6 +8,7 @@ import ru.test.tireservice.model.Car;
 import ru.test.tireservice.model.Order;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,8 +34,13 @@ public class CarDtoResponse {
                 .model(car.getModel())
                 .type(car.getType())
                 .tireSize(car.getTireSize())
-                .userId(car.getUser().getId())
-                .orders(car.getOrders().stream().map(Order::getId).toList())
+//                .userId(car.getUser().getId())
+//                .orders(car.getOrders().stream().map(Order::getId).toList())
+                .userId(car.getUser() != null
+                        ? car.getUser().getId() : null)
+                .orders(car.getOrders() != null
+                        ? car.getOrders().stream().map(Order::getId).toList()
+                : Collections.emptyList())
                 .build();
     }
 

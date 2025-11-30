@@ -33,6 +33,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @ManyToOne

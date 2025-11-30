@@ -5,9 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.test.tireservice.model.Car;
+import ru.test.tireservice.model.Order;
 import ru.test.tireservice.model.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,9 +35,9 @@ public class UserDtoRequest {
                 .age(user.getAge())
                 .email(user.getEmail())
                 .phone(user.getPhone())
-                .cars(user.getCars().stream().map(Car::getId).toList())
-//                .customerOrders(user.getCustomerOrders().stream().map(Order::getId).toList())
-//                .masterOrders(user.getMasterOrders()) // Выделить отдельно
+                .cars(user.getCars() != null
+                        ? user.getCars().stream().map(Car::getId).toList()
+                        : Collections.emptyList())
                 .build();
     }
 
