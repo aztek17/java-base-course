@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.test.tireservice.model.Car;
 import ru.test.tireservice.model.Order;
-import ru.test.tireservice.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

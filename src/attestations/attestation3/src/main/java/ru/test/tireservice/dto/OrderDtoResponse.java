@@ -1,11 +1,11 @@
 package ru.test.tireservice.dto;
 
-import jakarta.persistence.*;
-import lombok.*;
-import ru.test.tireservice.model.Car;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.test.tireservice.model.Order;
-import ru.test.tireservice.model.Service;
-import ru.test.tireservice.model.User;
+import ru.test.tireservice.model.Services;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,14 +23,10 @@ public class OrderDtoResponse {
     private BigDecimal totalAmount;
     private Order.OrderStatus status;
     private LocalDateTime createdAt;
-//    private User customer;
-//    private User master;
     private Long customer;
     private Long master;
-//    private Car car;
     private Long car;
-//    private List<Service> services = new ArrayList<>(); // Нужен baseServiceDto что бы портянку не отдавать
-    private List<Service> services = new ArrayList<>();
+    private List<Services> services = new ArrayList<>(); // Нужен baseServiceDto что бы портянку не отдавать
 
     public static OrderDtoResponse from(Order order) {
         return OrderDtoResponse.builder()

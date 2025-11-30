@@ -54,5 +54,5 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
     @ToString.Exclude
-    private List<Service> services = new ArrayList<>();
+    private List<Services> services = new ArrayList<>();
 }

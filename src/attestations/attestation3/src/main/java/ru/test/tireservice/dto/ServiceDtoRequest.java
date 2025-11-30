@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.test.tireservice.model.Car;
-import ru.test.tireservice.model.Service;
+import ru.test.tireservice.model.Services;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,7 +23,7 @@ public class ServiceDtoRequest {
     private Integer durationMinutes;
     private Car.CarType carType;
 
-    public static ServiceDtoRequest from(Service service) {
+    public static ServiceDtoRequest from(Services service) {
         return ServiceDtoRequest.builder()
                 .serviceName(service.getServiceName())
                 .description(service.getDescription())
@@ -33,7 +33,17 @@ public class ServiceDtoRequest {
                 .build();
     }
 
-    public static List<ServiceDtoRequest> from(List<Service> services) {
+    public static List<ServiceDtoRequest> from(List<Services> services) {
         return services.stream().map(ServiceDtoRequest::from).collect(Collectors.toList());
+    }
+
+    public static Services to(ServiceDtoRequest dto) {
+        return Services.builder()
+                .serviceName(dto.getServiceName())
+                .description(dto.getDescription())
+                .price(dto.getPrice())
+                .durationMinutes(dto.getDurationMinutes())
+                .carType(dto.getCarType())
+                .build();
     }
 }

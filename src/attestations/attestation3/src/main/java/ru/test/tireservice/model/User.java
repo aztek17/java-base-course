@@ -21,6 +21,9 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "gender")
     private String gender;
 

@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.test.tireservice.model.Car;
-import ru.test.tireservice.model.Order;
-import ru.test.tireservice.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +20,6 @@ public class CarDtoRequest {
     private String model;
     private Car.CarType type;
     private Integer tireSize;
-//    private Long userId;
-    private List<Long> orders = new ArrayList<>();
 
     public static CarDtoRequest from(Car car) {
         return CarDtoRequest.builder()
@@ -32,12 +27,20 @@ public class CarDtoRequest {
                 .model(car.getModel())
                 .type(car.getType())
                 .tireSize(car.getTireSize())
-//                .userId(car.getUser().getId())
                 .build();
     }
 
     public static List<CarDtoRequest> from(List<Car> cars) {
         return cars.stream().map(CarDtoRequest::from).collect(Collectors.toList());
+    }
+
+    public static Car to(CarDtoRequest dto) {
+        return Car.builder()
+                .brand(dto.getBrand())
+                .model(dto.getModel())
+                .type(dto.getType())
+                .tireSize(dto.getTireSize())
+                .build();
     }
 
 }

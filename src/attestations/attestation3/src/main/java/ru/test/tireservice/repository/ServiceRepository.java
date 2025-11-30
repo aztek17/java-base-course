@@ -1,7 +1,9 @@
 package ru.test.tireservice.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.test.tireservice.model.Service;
+import org.springframework.stereotype.Repository;
+import ru.test.tireservice.model.Services;
 
-public interface ServiceRepository extends JpaRepository<Service, Long> {
+@Repository
+public interface ServiceRepository extends JpaRepository<Services, Long> {
 }

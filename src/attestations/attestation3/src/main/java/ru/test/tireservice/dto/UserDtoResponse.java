@@ -1,7 +1,9 @@
 package ru.test.tireservice.dto;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.test.tireservice.model.Car;
 import ru.test.tireservice.model.Order;
 import ru.test.tireservice.model.User;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class UserDtoResponse {
     private Long id;
     private String gender;
+    private String name;
     private Integer age;
     private String email;
     private String phone;
@@ -29,6 +32,7 @@ public class UserDtoResponse {
         return UserDtoResponse.builder()
                 .id(user.getId())
                 .gender(user.getGender())
+                .name(user.getName())
                 .age(user.getAge())
                 .email(user.getEmail())
                 .phone(user.getPhone())
