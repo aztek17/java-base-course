@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItems {
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class OrderItems {
 
     @ManyToOne
     @JoinColumn(name = "service_id")
-    private Services service;
+    private TyreService service;
 
     @Column(name = "quantity")
     private Integer quantity;
@@ -40,6 +40,14 @@ public class OrderItems {
         if (quantity == null || quantity <= 0) {
             quantity = 1;
         }
+    }
+
+    @Transient
+    public BigDecimal getSubtotal() {
+        if (price == null || quantity == null) {
+            return BigDecimal.ZERO;
+        }
+        return price.multiply(BigDecimal.valueOf(quantity));
     }
 
 }

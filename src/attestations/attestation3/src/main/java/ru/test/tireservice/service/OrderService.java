@@ -1,23 +1,21 @@
 package ru.test.tireservice.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.test.tireservice.dto.OrderDtoRequest;
 import ru.test.tireservice.dto.OrderDtoResponse;
-import ru.test.tireservice.model.Car;
-import ru.test.tireservice.model.Order;
-import ru.test.tireservice.model.Services;
-import ru.test.tireservice.model.User;
-import ru.test.tireservice.repository.CarRepository;
-import ru.test.tireservice.repository.OrderRepository;
-import ru.test.tireservice.repository.ServiceRepository;
-import ru.test.tireservice.repository.UserRepository;
+import ru.test.tireservice.dto.OrderItemDto;
+import ru.test.tireservice.dto.OrderItemRequestDto;
+import ru.test.tireservice.model.*;
+import ru.test.tireservice.repository.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,131 +25,213 @@ public class OrderService {
     private final UserRepository userRepository;
     private final CarRepository carRepository;
     private final ServiceRepository serviceRepository;
+    private final OrderItemRepository orderItemRepository;
 
     public OrderDtoResponse getOrderById(Long id) {
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Заказа с ID " + id + " не существует"));
-        return OrderDtoResponse.from(order);
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Заказа с ID " + id + " не существует"
+                ));
+        return toDto(order);
     }
 
     public List<OrderDtoResponse> getAllOrders() {
-        return OrderDtoResponse.from(orderRepository.findAll());
+        return orderRepository.findAll().stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
-    public OrderDtoResponse createOrder(OrderDtoRequest dto) {
-        User customer = userRepository.findById(dto.getCustomer())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Пользователя с ID " + dto.getCustomer() + " не существует"));
+    @Transactional
+    public OrderDtoResponse createOrder(OrderDtoRequest request) {
+        User customer = userRepository.findById(request.getCustomerId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Пользователя с ID " + request.getCustomerId() + " не существует"
+                ));
 
-        Car car = carRepository.findById(dto.getCar())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Автомобиля с ID " + dto.getCar() + " не существует"));
-
-        User master = null;
-        if (dto.getMaster() != null) {
-            master = userRepository.findById(dto.getMaster())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "Мастера с ID " + dto.getMaster() + " не существует"));
-        }
-
-        List<Services> services = serviceRepository.findAllById(dto.getServices());
-        if (services.size() != dto.getServices().size()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Некоторые услуги не найдены");
-        }
-
-        BigDecimal totalAmount = calculateTotalSum(services);
+        Car car = carRepository.findById(request.getCarId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Автомобиля с ID " + request.getCarId() + " не существует"
+                ));
 
         Order order = Order.builder()
-                .totalAmount(totalAmount)
+                .customer(customer)
+                .car(car)
                 .status(Order.OrderStatus.NEW)
                 .createdAt(LocalDateTime.now())
-                .customer(customer)
-                .master(master)
-                .car(car)
-                .services(services)
                 .build();
 
         Order savedOrder = orderRepository.save(order);
-        return OrderDtoResponse.from(savedOrder);
+
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (OrderItemRequestDto itemReq : request.getItems()) {
+            TyreService service = serviceRepository.findById(itemReq.getServiceId())
+                    .orElseThrow(() -> new ResponseStatusException(
+                            HttpStatus.NOT_FOUND,
+                            "Услуги с ID " + itemReq.getServiceId() + " не существует"
+                    ));
+
+            OrderItem item = OrderItem.builder()
+                    .order(savedOrder)
+                    .service(service)
+                    .quantity(itemReq.getQuantity())
+                    .price(service.getPrice())
+                    .build();
+
+            orderItemRepository.save(item);
+            total = total.add(service.getPrice()
+                    .multiply(BigDecimal.valueOf(itemReq.getQuantity())));
+        }
+
+        savedOrder.setTotalAmount(total);
+        orderRepository.save(savedOrder);
+
+        return toDto(savedOrder);
     }
 
-    public OrderDtoResponse updateOrder(Long id, OrderDtoRequest dto) {
+    @Transactional
+    public OrderDtoResponse updateStatus(Long id, Order.OrderStatus status) {
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Заказа с ID " + id + " не существует"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Заказа с ID " + id + " не существует"
+                ));
 
-        if (dto.getCustomer() != null) {
-            User customer = userRepository.findById(dto.getCustomer())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "Пользователя с ID " + dto.getCustomer() + " не существует"));
-            order.setCustomer(customer);
-        }
-
-        if (dto.getCar() != null) {
-            Car car = carRepository.findById(dto.getCar())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "Автомобиля с ID " + dto.getCar() + " не существует"));
-            order.setCar(car);
-        }
-
-        if (dto.getMaster() != null) {
-            User master = userRepository.findById(dto.getMaster())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "Мастера с ID " + dto.getMaster() + " не существует"));
-            order.setMaster(master);
-        }
-
-        if (dto.getServices() != null && !dto.getServices().isEmpty()) {
-            List<Services> services = serviceRepository.findAllById(dto.getServices());
-            if (services.size() != dto.getServices().size()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                        "Некоторые услуги не найдены");
-            }
-            order.setServices(services);
-            order.setTotalAmount(calculateTotalSum(services));
+        order.setStatus(status);
+        if (status == Order.OrderStatus.COMPLETED) {
+            order.setCompletedAt(LocalDateTime.now());
         }
 
         Order updatedOrder = orderRepository.save(order);
-        return OrderDtoResponse.from(updatedOrder);
+        return toDto(updatedOrder);
     }
 
-    public OrderDtoResponse updateOrderStatus(Long id, Order.OrderStatus newStatus) {
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Заказа с ID " + id + " не существует"));
+    @Transactional
+    public OrderDtoResponse addItemToOrder(Long orderId, OrderItemRequestDto itemReq) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Заказа с ID " + orderId + " не существует"
+                ));
 
-        order.setStatus(newStatus);
-        Order updatedOrder = orderRepository.save(order);
-        return OrderDtoResponse.from(updatedOrder);
+        if (order.getStatus() != Order.OrderStatus.NEW) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Можно добавлять услуги только в заказы со статусом NEW"
+            );
+        }
+
+        TyreService service = serviceRepository.findById(itemReq.getServiceId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Услуги с ID " + itemReq.getServiceId() + " не существует"
+                ));
+
+        OrderItem item = OrderItem.builder()
+                .order(order)
+                .service(service)
+                .quantity(itemReq.getQuantity())
+                .price(service.getPrice())
+                .build();
+
+        orderItemRepository.save(item);
+        recalculateTotal(orderId);
+
+        return toDto(orderRepository.findById(orderId).get());
     }
 
     public List<OrderDtoResponse> getOrdersByCustomer(Long customerId) {
         User customer = userRepository.findById(customerId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Пользователя с ID " + customerId + " не существует"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Пользователя с ID " + customerId + " не существует"
+                ));
 
-        return OrderDtoResponse.from(orderRepository.findByCustomer(customer));
-    }
-
-    public List<OrderDtoResponse> getOrdersByMaster(Long masterId) {
-        User master = userRepository.findById(masterId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Мастера с ID " + masterId + " не существует"));
-
-        return OrderDtoResponse.from(orderRepository.findByMaster(master));
+        return orderRepository.findByCustomer(customer).stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
     public List<OrderDtoResponse> getOrdersByStatus(Order.OrderStatus status) {
-        return OrderDtoResponse.from(orderRepository.findByStatus(status));
+        return orderRepository.findByStatus(status).stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
-    private BigDecimal calculateTotalSum(List<Services> services) {
-        BigDecimal total = BigDecimal.ZERO;
-        for (Services service : services) {
-            total = total.add(service.getPrice());
+    @Transactional
+    public void deleteOrderItem(Long orderId, Long itemId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Заказа с ID " + orderId + " не существует"
+                ));
+
+        if (order.getStatus() != Order.OrderStatus.NEW) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Можно удалять услуги только из заказов со статусом NEW"
+            );
         }
-        return total;
+
+        OrderItem item = orderItemRepository.findById(itemId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Позиции заказа с ID " + itemId + " не существует"
+                ));
+
+        if (!item.getOrder().getId().equals(orderId)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Позиция не принадлежит указанному заказу"
+            );
+        }
+
+        orderItemRepository.delete(item);
+        recalculateTotal(orderId);
+    }
+
+    private void recalculateTotal(Long orderId) {
+        List<OrderItem> items = orderItemRepository.findById(orderId).stream().toList();
+
+        BigDecimal total = items.stream()
+                .map(item -> item.getPrice()
+                        .multiply(BigDecimal.valueOf(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        Order order = orderRepository.findById(orderId).get();
+        order.setTotalAmount(total);
+        orderRepository.save(order);
+    }
+
+    private OrderDtoResponse toDto(Order order) {
+        List<OrderItemDto> listItemDto = orderItemRepository.findById(order.getId()).stream()
+                .map(item -> OrderItemDto.builder()
+                        .id(item.getId())
+                        .serviceId(item.getService().getId())
+                        .serviceName(item.getService().getServiceName())
+                        .quantity(item.getQuantity())
+                        .price(item.getPrice())
+                        .subtotal(item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+                        .build())
+                .collect(Collectors.toList());
+
+        String carInfo = String.format("%s %s)",
+                order.getCar().getBrand(),
+                order.getCar().getModel());
+
+        return OrderDtoResponse.builder()
+                .id(order.getId())
+                .customerId(order.getCustomer().getId())
+                .customerName(order.getCustomer().getName())
+                .carId(order.getCar().getId())
+                .carInfo(carInfo)
+                .createdAt(order.getCreatedAt())
+                .items(listItemDto)
+                .totalAmount(order.getTotalAmount())
+                .status(order.getStatus())
+                .build();
     }
 }

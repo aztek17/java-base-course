@@ -5,11 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.test.tireservice.model.Order;
-import ru.test.tireservice.model.Services;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,28 +18,27 @@ import java.util.stream.Collectors;
 public class OrderDtoResponse {
 
     private Long id;
-    private BigDecimal totalAmount;
-    private Order.OrderStatus status;
+    private Long customerId;
+    private String customerName;
+    private Long carId;
+    private String carInfo;
     private LocalDateTime createdAt;
-    private Long customer;
-    private Long master;
-    private Long car;
-    private List<Services> services = new ArrayList<>(); // Нужен baseServiceDto что бы портянку не отдавать
+    private List<OrderItemDto> items;
+    private BigDecimal totalAmount;
+    private Order.OrderStatus status; // Оставляем enum
 
-    public static OrderDtoResponse from(Order order) {
-        return OrderDtoResponse.builder()
-                .id(order.getId())
-                .totalAmount(order.getTotalAmount())
-                .status(order.getStatus())
-                .createdAt(order.getCreatedAt())
-                .customer(order.getCustomer().getId())
-                .master(order.getMaster().getId())
-                .services(order.getServices()) // Нужен baseServiceDto что бы портянку не отдавать
-                .build();
+    public Integer getTotalItemsCount() {
+        return items != null ?
+                items.stream().mapToInt(OrderItemDto::getQuantity).sum() : 0;
     }
 
-    public static List<OrderDtoResponse> from(List<Order> orders) {
-        return orders.stream().map(OrderDtoResponse::from).collect(Collectors.toList());
+    public String getServicesList() {
+        if (items == null || items.isEmpty()) {
+            return "Нет услуг";
+        }
+        return items.stream()
+                .map(item -> item.getServiceName() + " x" + item.getQuantity())
+                .collect(Collectors.joining(", "));
     }
 
 }

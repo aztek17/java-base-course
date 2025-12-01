@@ -51,11 +51,4 @@ public class CarService {
         return CarDtoResponse.from(car);
     }
 
-//    public void deleteCar(Long id) {
-//        Car car = repository.findById(id).orElseThrow(()
-//                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Телевизор с ID: " + id + " не найден!"));
-//        car.setDeleted(true);
-//        repository.save(car);
-//    }
-
 }

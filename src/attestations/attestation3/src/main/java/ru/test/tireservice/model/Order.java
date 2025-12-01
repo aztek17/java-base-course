@@ -35,6 +35,9 @@ public class Order {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "completed_at")
+    private LocalDateTime completedAt;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User customer;
@@ -45,7 +48,7 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<OrderItems> items;
+    private List<OrderItem> items;
 
     @PrePersist
     public void prePersist() {
@@ -60,13 +63,13 @@ public class Order {
         }
     }
 
-//    public void addItem(OrderItems item) {
-//        items.add(item);
-//        item.setOrder(this);
-//    }
-//
-//    public void removeItem(OrderItems item) {
-//        items.remove(item);
-//        item.setOrder(null);
-//    }
+    public void addItem(OrderItem item) {
+        items.add(item);
+        item.setOrder(this);
+    }
+
+    public void removeItem(OrderItem item) {
+        items.remove(item);
+        item.setOrder(null);
+    }
 }

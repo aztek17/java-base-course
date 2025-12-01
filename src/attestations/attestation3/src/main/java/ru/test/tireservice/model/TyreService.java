@@ -16,7 +16,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Services {
+public class TyreService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +36,6 @@ public class Services {
 
     @OneToMany(mappedBy = "service")
     @ToString.Exclude
-    private List<OrderItems> ordersItems = new ArrayList<>();
+    private List<OrderItem> ordersItems = new ArrayList<>();
 
 }

@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.test.tireservice.model.Car;
-import ru.test.tireservice.model.Services;
+import ru.test.tireservice.model.TyreService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,29 +20,26 @@ public class ServiceDtoRequest {
     private String description;
     private BigDecimal price;
     private Integer durationMinutes;
-    private Car.CarType carType;
 
-    public static ServiceDtoRequest from(Services service) {
+    public static ServiceDtoRequest from(TyreService service) {
         return ServiceDtoRequest.builder()
                 .serviceName(service.getServiceName())
                 .description(service.getDescription())
                 .price(service.getPrice())
                 .durationMinutes(service.getDurationMinutes())
-                .carType(service.getCarType())
                 .build();
     }
 
-    public static List<ServiceDtoRequest> from(List<Services> services) {
+    public static List<ServiceDtoRequest> from(List<TyreService> services) {
         return services.stream().map(ServiceDtoRequest::from).collect(Collectors.toList());
     }
 
-    public static Services to(ServiceDtoRequest dto) {
-        return Services.builder()
+    public static TyreService to(ServiceDtoRequest dto) {
+        return TyreService.builder()
                 .serviceName(dto.getServiceName())
                 .description(dto.getDescription())
                 .price(dto.getPrice())
                 .durationMinutes(dto.getDurationMinutes())
-                .carType(dto.getCarType())
                 .build();
     }
 }

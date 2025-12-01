@@ -62,11 +62,5 @@ public class UserService {
         return UserDtoResponse.from(user);
     }
 
-//    public void deleteUser(Long id) {
-//        User user = repository.findById(id).orElseThrow(()
-//                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "пользователя с ID " + id + " не существует или он удален"));
-//        user.setDeleted(true);
-//        repository.save(user);
-//    }
 
 }
