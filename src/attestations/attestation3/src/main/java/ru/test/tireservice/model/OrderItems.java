@@ -34,4 +34,12 @@ public class OrderItems {
     @Column(name = "price")
     private BigDecimal price;
 
+    @PrePersist
+    @PreUpdate
+    public void prePersistAndUpdate() {
+        if (quantity == null || quantity <= 0) {
+            quantity = 1;
+        }
+    }
+
 }
