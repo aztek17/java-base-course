@@ -131,14 +131,15 @@ public class OrderService {
                 ));
 
         OrderItem item = OrderItem.builder()
-                .order(order)
                 .service(service)
                 .quantity(itemReq.getQuantity())
                 .price(service.getPrice())
                 .build();
 
-        orderItemRepository.save(item);
+        order.addItem(item);
         recalculateTotal(orderId);
+
+        orderRepository.save(order);
 
         return toDto(orderRepository.findById(orderId).get());
     }
@@ -194,7 +195,7 @@ public class OrderService {
     }
 
     private void recalculateTotal(Long orderId) {
-        List<OrderItem> items = orderItemRepository.findById(orderId).stream().toList();
+        List<OrderItem> items = orderItemRepository.findByOrderId(orderId);
 
         BigDecimal total = items.stream()
                 .map(item -> item.getPrice()
@@ -207,7 +208,7 @@ public class OrderService {
     }
 
     private OrderDtoResponse toDto(Order order) {
-        List<OrderItemDto> listItemDto = orderItemRepository.findById(order.getId()).stream()
+        List<OrderItemDto> listItemDto = orderItemRepository.findByOrderId(order.getId()).stream()
                 .map(item -> OrderItemDto.builder()
                         .id(item.getId())
                         .serviceId(item.getService().getId())
