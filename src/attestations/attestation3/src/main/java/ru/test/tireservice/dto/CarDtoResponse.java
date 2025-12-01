@@ -34,8 +34,6 @@ public class CarDtoResponse {
                 .model(car.getModel())
                 .type(car.getType())
                 .tireSize(car.getTireSize())
-//                .userId(car.getUser().getId())
-//                .orders(car.getOrders().stream().map(Order::getId).toList())
                 .userId(car.getUser() != null
                         ? car.getUser().getId() : null)
                 .orders(car.getOrders() != null

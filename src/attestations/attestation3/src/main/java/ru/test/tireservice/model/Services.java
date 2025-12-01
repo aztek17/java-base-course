@@ -34,12 +34,8 @@ public class Services {
     @Column(name = "duration")
     private Integer durationMinutes;
 
-    @ManyToMany(mappedBy = "services")
+    @OneToMany(mappedBy = "service")
     @ToString.Exclude
-    private List<Order> orders = new ArrayList<>();
-
-    @Column(name = "car_type")
-    @Enumerated(EnumType.STRING)
-    private Car.CarType carType;
+    private List<OrderItems> ordersItems = new ArrayList<>();
 
 }

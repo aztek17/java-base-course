@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -41,19 +40,33 @@ public class Order {
     private User customer;
 
     @ManyToOne
-    @JoinColumn(name = "master_id")
-    private User master;
-
-    @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @ManyToMany
-    @JoinTable(
-            name = "order_services",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "service_id")
-    )
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<Services> services = new ArrayList<>();
+    private List<OrderItems> items;
+
+    @PrePersist
+    public void prePersist() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+        if (status == null) {
+            status = OrderStatus.NEW;
+        }
+        if (totalAmount == null) {
+            totalAmount = BigDecimal.ZERO;
+        }
+    }
+
+//    public void addItem(OrderItems item) {
+//        items.add(item);
+//        item.setOrder(this);
+//    }
+//
+//    public void removeItem(OrderItems item) {
+//        items.remove(item);
+//        item.setOrder(null);
+//    }
 }

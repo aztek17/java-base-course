@@ -44,7 +44,4 @@ public class User {
     @ToString.Exclude
     private List<Order> customerOrders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "master")
-    @ToString.Exclude
-    private List<Order> masterOrders = new ArrayList<>();
 }
