@@ -25,7 +25,7 @@ public class OrderDtoResponse {
     private LocalDateTime createdAt;
     private List<OrderItemDto> items;
     private BigDecimal totalAmount;
-    private Order.OrderStatus status; // Оставляем enum
+    private Order.OrderStatus status;
 
     public Integer getTotalItemsCount() {
         return items != null ?
