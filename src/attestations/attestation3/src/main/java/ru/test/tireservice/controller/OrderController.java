@@ -79,10 +79,10 @@ public class OrderController {
                 .body(orderService.getOrdersByStatus(status));
     }
 
-//    @DeleteMapping("/order/{id}")
-//    public ResponseEntity<OrderDtoResponse> deleteOrder(@PathVariable("id") Long id) {
-//        orderService.deleteOrder(id);
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<OrderDtoResponse> deleteOrder(@PathVariable("id") Long id) {
+        orderService.deleteOrder(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 }

@@ -47,9 +47,9 @@ public class UserController {
                 .body(userService.updateUser(id, dto));
     }
 
-//    @DeleteMapping("/service/{id}")
-//    public ResponseEntity<UserDtoResponse> deleteUser(@PathVariable("id") Long id) {
-//        userService.deleteUser(id);
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<UserDtoResponse> deleteUser(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }
