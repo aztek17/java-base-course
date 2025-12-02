@@ -3,6 +3,7 @@ package ru.test.tireservice.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.test.tireservice.dto.UserDtoRequest;
 import ru.test.tireservice.dto.UserDtoResponse;
@@ -21,12 +22,12 @@ public class UserService {
     private final CarRepository carRepository;
 
     public UserDtoResponse getUsersById(Long id) {
-        return UserDtoResponse.from(userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+        return UserDtoResponse.from(userRepository.findActiveById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Пользователя с ID " + id + " не существует или он удален")));
     }
 
     public List<UserDtoResponse> getAllUsers() {
-        return UserDtoResponse.from(userRepository.findAll());
+        return UserDtoResponse.from(userRepository.findAllActive());
     }
 
     public UserDtoResponse createUser(UserDtoRequest dto) {
@@ -36,7 +37,7 @@ public class UserService {
     }
 
     public UserDtoResponse updateUser(Long id, UserDtoRequest dto) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+        User user = userRepository.findActiveById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Пользователя с ID " + id + " не существует или он удален"));
         if (dto.getGender() != null) {
             user.setGender(dto.getGender());
@@ -63,4 +64,11 @@ public class UserService {
     }
 
 
+    @Transactional
+    public void deleteUser(Long id) {
+        User user = userRepository.findActiveById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Пользователя с ID " + id + " не существует или он удален"));
+
+        userRepository.softDelete(id);
+    }
 }

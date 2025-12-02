@@ -1,9 +1,9 @@
 package ru.test.tireservice.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.test.tireservice.dto.OrderDtoRequest;
 import ru.test.tireservice.dto.OrderDtoResponse;
@@ -28,7 +28,7 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
 
     public OrderDtoResponse getOrderById(Long id) {
-        Order order = orderRepository.findById(id)
+        Order order = orderRepository.findActiveById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "Заказа с ID " + id + " не существует"
@@ -37,14 +37,14 @@ public class OrderService {
     }
 
     public List<OrderDtoResponse> getAllOrders() {
-        return orderRepository.findAll().stream()
+        return orderRepository.findAllActive().stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
     @Transactional
     public OrderDtoResponse createOrder(OrderDtoRequest request) {
-        User customer = userRepository.findById(request.getCustomerId())
+        User customer = userRepository.findActiveById(request.getCustomerId())
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "Пользователя с ID " + request.getCustomerId() + " не существует"
@@ -94,7 +94,7 @@ public class OrderService {
 
     @Transactional
     public OrderDtoResponse updateStatus(Long id, Order.OrderStatus status) {
-        Order order = orderRepository.findById(id)
+        Order order = orderRepository.findActiveById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "Заказа с ID " + id + " не существует"
@@ -111,7 +111,7 @@ public class OrderService {
 
     @Transactional
     public OrderDtoResponse addItemToOrder(Long orderId, OrderItemRequestDto itemReq) {
-        Order order = orderRepository.findById(orderId)
+        Order order = orderRepository.findActiveById(orderId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "Заказа с ID " + orderId + " не существует"
@@ -141,11 +141,11 @@ public class OrderService {
 
         orderRepository.save(order);
 
-        return toDto(orderRepository.findById(orderId).get());
+        return toDto(orderRepository.findActiveById(orderId).get());
     }
 
     public List<OrderDtoResponse> getOrdersByCustomer(Long customerId) {
-        User customer = userRepository.findById(customerId)
+        User customer = userRepository.findActiveById(customerId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "Пользователя с ID " + customerId + " не существует"
@@ -164,7 +164,7 @@ public class OrderService {
 
     @Transactional
     public void deleteOrderItem(Long orderId, Long itemId) {
-        Order order = orderRepository.findById(orderId)
+        Order order = orderRepository.findActiveById(orderId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "Заказа с ID " + orderId + " не существует"
@@ -202,7 +202,7 @@ public class OrderService {
                         .multiply(BigDecimal.valueOf(item.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        Order order = orderRepository.findById(orderId).get();
+        Order order = orderRepository.findActiveById(orderId).get();
         order.setTotalAmount(total);
         orderRepository.save(order);
     }
@@ -234,5 +234,23 @@ public class OrderService {
                 .totalAmount(order.getTotalAmount())
                 .status(order.getStatus())
                 .build();
+    }
+
+    @Transactional
+    public void deleteOrder(Long id) {
+        Order order = orderRepository.findActiveById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Заказа с ID " + id + " не существует или он удален"
+                ));
+
+        if (order.getStatus() == Order.OrderStatus.IN_PROGRESS) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Нельзя удалять заказ в статусе IN_PROGRESS"
+            );
+        }
+
+        orderRepository.softDelete(id);
     }
 }
