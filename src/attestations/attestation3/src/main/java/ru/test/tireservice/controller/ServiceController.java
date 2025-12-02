@@ -47,10 +47,4 @@ public class ServiceController {
                 .body(service.updateService(id, dto));
     }
 
-//    @DeleteMapping("/service/{id}")
-//    public ResponseEntity<ServiceDtoResponse> deleteService(@PathVariable("id") Long id) {
-//        service.deleteService(id);
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
-
 }

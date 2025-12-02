@@ -21,16 +21,4 @@ public class OrderItemDto {
     private BigDecimal price;
     private BigDecimal subtotal;
 
-//    public static OrderItemDto from(OrderItem items) {
-//        return OrderItemDto.builder()
-//                .id(items.getId())
-//                .orderId(items.getOrder().getId())
-//                .serviceId(items.getService().getId())
-//                .serviceName(items.getService().getServiceName())
-//                .quantity(items.getQuantity())
-//                .price(items.getPrice())
-//                .subtotal(items.getSubtotal())
-//                .build();
-//    }
-
 }

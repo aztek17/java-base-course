@@ -26,8 +26,6 @@ public class UserDtoResponse {
     private String phone;
     private List<Long> cars = new ArrayList<>();
     private List<Long> customerOrders = new ArrayList<>();
-//    private List<Order> customerOrders = new ArrayList<>();
-//    private List<Order> masterOrders = new ArrayList<>();
 
     public static UserDtoResponse from(User user) {
         return UserDtoResponse.builder()

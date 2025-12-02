@@ -24,9 +24,6 @@ public class UserDtoRequest {
     private String email;
     private String phone;
     private List<Long> cars = new ArrayList<>();
-//    private List<Long> customerOrders = new ArrayList<>();
-//    private List<Order> customerOrders = new ArrayList<>();
-//    private List<Order> masterOrders = new ArrayList<>();
 
     public static UserDtoRequest from(User user) {
         return UserDtoRequest.builder()

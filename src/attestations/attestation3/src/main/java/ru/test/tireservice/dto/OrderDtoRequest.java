@@ -20,17 +20,4 @@ public class OrderDtoRequest {
     private Long carId;
     private List<OrderItemRequestDto> items = new ArrayList<>();
 
-//    public static OrderDtoRequest from(Order order) {
-//        return OrderDtoRequest.builder()
-//                .customer(order.getCustomer().getId())
-//                .car(order.getCar().getId())
-//                .items(order.getItems())
-//                .build();
-//    }
-//
-//    public static List<OrderDtoRequest> from(List<Order> orders) {
-//        return orders.stream()
-//                .map(OrderDtoRequest::from)
-//                .collect(Collectors.toList());
-//    }
 }
