@@ -1,5 +1,7 @@
 package ru.test.tireservice.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,9 +18,11 @@ import java.util.stream.Collectors;
 
 public class CarDtoRequest {
 
+    @NotBlank(message = "Марка автомобиля не может быть пустой")
     private String brand;
     private String model;
     private Car.CarType type;
+    @Positive(message = "Размер шин должен быть положительным числом")
     private Integer tireSize;
 
     public static CarDtoRequest from(Car car) {

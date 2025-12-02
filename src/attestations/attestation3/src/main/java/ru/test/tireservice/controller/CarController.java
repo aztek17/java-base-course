@@ -1,5 +1,6 @@
 package ru.test.tireservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class CarController {
     private final CarService service;
 
     @PostMapping("/car")
-    public ResponseEntity<CarDtoResponse> createCar(@RequestBody CarDtoRequest dtoRequest) {
+    public ResponseEntity<CarDtoResponse> createCar(@Valid @RequestBody CarDtoRequest dtoRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(service.createCar(dtoRequest));
