@@ -2,6 +2,7 @@ package ru.test.tireservice.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 
@@ -9,7 +10,7 @@ import java.math.BigDecimal;
 @Table(name = "order_items")
 @Setter
 @Getter
-@Builder
+@SuperBuilder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

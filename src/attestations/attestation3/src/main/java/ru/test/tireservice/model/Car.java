@@ -2,6 +2,7 @@ package ru.test.tireservice.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +11,11 @@ import java.util.List;
 @Table(name = "cars")
 @Setter
 @Getter
-@Builder
+@SuperBuilder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Car extends BaseModel{
+public class Car extends BaseModel {
 
     public enum CarType {
         PASSENGER, SUV, TRUCK, BUS, COMMERCIAL

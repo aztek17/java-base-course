@@ -2,6 +2,7 @@ package ru.test.tireservice.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.util.List;
 @Table(name = "Orders")
 @Setter
 @Getter
-@Builder
+@SuperBuilder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

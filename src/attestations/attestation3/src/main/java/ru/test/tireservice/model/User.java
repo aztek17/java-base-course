@@ -2,6 +2,7 @@ package ru.test.tireservice.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 @Table(name = "Users")
 @Setter
 @Getter
-@Builder
+@SuperBuilder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
