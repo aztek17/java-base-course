@@ -14,16 +14,11 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Car {
+public class Car extends BaseModel{
 
     public enum CarType {
         PASSENGER, SUV, TRUCK, BUS, COMMERCIAL
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
 
     @Column(name = "brand")
     private String brand;

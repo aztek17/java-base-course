@@ -15,15 +15,10 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+public class Order extends BaseModel {
     public enum OrderStatus {
         NEW, IN_PROGRESS, COMPLETED, CANCELED
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
 
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
