@@ -46,11 +46,5 @@ public class CarController {
                 .status(HttpStatus.OK)
                 .body(service.updateCar(id, dto));
     }
-
-//    @DeleteMapping("/car/{id}")
-//    public ResponseEntity<CarDtoResponse> deleteCar(@PathVariable("id") Long id) {
-//        service.deleteCar(id);
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
     
 }
