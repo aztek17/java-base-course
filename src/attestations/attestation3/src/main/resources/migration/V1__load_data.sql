@@ -6,6 +6,9 @@ create table public.users (
 	gender varchar(255) null,
 	"name" varchar(255) null,
 	phone varchar(255) null,
+	created_at timestamp(6) null,
+    updated_at timestamp(6) null,
+    is_deleted boolean not null default false,
 	constraint users_pkey primary key (id)
 );
 
@@ -17,6 +20,9 @@ create table public.cars (
 	brand varchar(255) null,
 	model varchar(255) null,
 	"type" varchar(255) null,
+	created_at timestamp(6) null,
+    updated_at timestamp(6) null,
+    is_deleted boolean not null default false,
 	constraint cars_pkey primary key (id),
     constraint cars_type_check check (
         "type" in ('PASSENGER', 'SUV', 'TRUCK', 'BUS', 'COMMERCIAL')
@@ -31,6 +37,9 @@ create table public.services (
 	id bigserial not null,
 	description varchar(255) null,
 	service_name varchar(255) null,
+	created_at timestamp(6) null,
+    updated_at timestamp(6) null,
+    is_deleted boolean not null default false,
 	constraint services_pkey primary key (id)
 );
 
@@ -40,6 +49,8 @@ create table public.orders (
 	car_id int8 null,
 	completed_at timestamp(6) null,
 	created_at timestamp(6) null,
+    updated_at timestamp(6) null,
+    is_deleted boolean not null default false,
 	id bigserial not null,
 	user_id int8 null,
 	status varchar(255) null,
@@ -58,6 +69,9 @@ create table public.order_items (
 	id bigserial not null,
 	order_id int8 null,
 	service_id int8 null,
+	created_at timestamp(6) null,
+    updated_at timestamp(6) null,
+    is_deleted boolean not null default false,
 	constraint order_items_pkey primary key (id),
 	constraint fkbioxgbv59vetrxe0ejfubep1w foreign key (order_id) references public.orders(id),
 	constraint fkmm8mpcqgnkrs1ytqbv66bdxso foreign key (service_id) references public.services(id)
