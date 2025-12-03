@@ -3,6 +3,7 @@ package ru.test.tireservice.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.test.tireservice.dto.ServiceDtoRequest;
 import ru.test.tireservice.dto.ServiceDtoResponse;
 import ru.test.tireservice.service.ServicesService;
